@@ -26,7 +26,7 @@ public class RegisterActivity extends Activity {
         loginDataBaseAdapter=loginDataBaseAdapter.open();
 
         // Get Refferences of Views
-        editTextUserName=(EditText)findViewById(R.id.emailEditText);
+        editTextUserName=(EditText)findViewById(R.id.usernameEditText);
         editTextPassword=(EditText)findViewById(R.id.passwordEditText);
         editTextConfirmPassword=(EditText)findViewById(R.id.password2EditText);
 
@@ -86,5 +86,9 @@ public class RegisterActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void cancelOnClick(View view) {
+        finish();
     }
 }
