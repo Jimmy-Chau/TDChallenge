@@ -39,19 +39,12 @@ public class LoginActivity extends Activity {
                 startActivity(intentRegister);
             }
         });
-    }
 
-    // Method to handleClick Event of Sign In Button
-    public void logIn(View V)
-    {
-        // get the Refferences of views
+        // get the References of views
         final EditText editTextUserName=(EditText)findViewById(R.id.usernameEditText);
         final EditText editTextPassword=(EditText)findViewById(R.id.passwordEditText);
 
-        Button btnSignIn=(Button)findViewById(R.id.loginButton);
-
-        // Set On ClickListener
-        btnSignIn.setOnClickListener(new View.OnClickListener() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View v) {
                 // get The User name and Password
