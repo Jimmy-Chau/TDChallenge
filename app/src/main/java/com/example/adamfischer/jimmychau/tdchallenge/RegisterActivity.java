@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 public class RegisterActivity extends Activity {
 
-    EditText editTextUserName,editTextPassword,editTextConfirmPassword;
+    EditText editTextUserName,editTextPassword,editTextConfirmPassword,editTextFirstName,editTextLastName,editTextEmail;
     Button btnCreateAccount;
 
     LoginDataBaseAdapter loginDataBaseAdapter;
@@ -25,10 +25,13 @@ public class RegisterActivity extends Activity {
         loginDataBaseAdapter=new LoginDataBaseAdapter(this);
         loginDataBaseAdapter=loginDataBaseAdapter.open();
 
-        // Get Refferences of Views
+        // Get References of Views
         editTextUserName=(EditText)findViewById(R.id.usernameEditText);
         editTextPassword=(EditText)findViewById(R.id.passwordEditText);
         editTextConfirmPassword=(EditText)findViewById(R.id.password2EditText);
+        editTextFirstName=(EditText)findViewById(R.id.firstNameEditText);
+        editTextLastName=(EditText)findViewById(R.id.lastNameEditView);
+        editTextEmail=(EditText)findViewById(R.id.emailEditText);
 
         btnCreateAccount=(Button)findViewById(R.id.registerButton);
         btnCreateAccount.setOnClickListener(new View.OnClickListener() {
@@ -39,12 +42,43 @@ public class RegisterActivity extends Activity {
                 String userName = editTextUserName.getText().toString();
                 String password = editTextPassword.getText().toString();
                 String confirmPassword = editTextConfirmPassword.getText().toString();
+                String firstName = editTextFirstName.getText().toString();
+                String lastName = editTextLastName.getText().toString();
+
+                String eMail = editTextEmail.getText().toString().trim();
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
                 // check if any of the fields are vaccant
-                if (userName.equals("") || password.equals("") || confirmPassword.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Field Vaccant", Toast.LENGTH_LONG).show();
+                if (firstName.equals("")) {
+                    Toast.makeText(getApplicationContext(), "First name is empty!", Toast.LENGTH_LONG).show();
                     return;
                 }
+                else if (lastName.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Last name is empty!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else if (eMail.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Email is empty!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else if (!eMail.matches(emailPattern))
+                {
+                    Toast.makeText(getApplicationContext(),"Invalid email address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                else if (userName.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Username is empty!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else if (password.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Password is empty!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                else if (confirmPassword.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Password confirmation is empty!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 // check if both password matches
                 if (!password.equals(confirmPassword)) {
                     Toast.makeText(getApplicationContext(), "Password does not match", Toast.LENGTH_LONG).show();
