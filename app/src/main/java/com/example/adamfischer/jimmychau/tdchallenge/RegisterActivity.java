@@ -85,7 +85,10 @@ public class RegisterActivity extends Activity {
                     return;
                 } else {
                     // Save the Data in Database
-                    loginDataBaseAdapter.insertEntry(userName, password);
+
+                    UserData userData = new UserData(0, userName, password, firstName, lastName, eMail);
+
+                    loginDataBaseAdapter.insertEntry(userData);
                     Toast.makeText(getApplicationContext(), "Account Successfully Created ", Toast.LENGTH_LONG).show();
                     finish();
                 }

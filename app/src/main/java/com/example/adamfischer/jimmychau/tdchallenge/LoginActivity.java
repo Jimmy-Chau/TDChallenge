@@ -59,10 +59,10 @@ public class LoginActivity extends Activity {
                 String password = editTextPassword.getText().toString();
 
                 // fetch the Password form database for respective user name
-                String storedPassword = loginDataBaseAdapter.getSinlgeEntry(userName);
+                UserData userData = loginDataBaseAdapter.getSingleEntry(userName);
 
                 // check if the Stored password matches with  Password entered by user
-                if (password.equals(storedPassword)) {
+                if (password.equals(userData.getPassword())) {
                     Toast.makeText(LoginActivity.this, "Congrats: Login Successfull", Toast.LENGTH_LONG).show();
 
                     Intent i = new Intent(v.getContext(), MainActivity.class);
