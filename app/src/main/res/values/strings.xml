@@ -12,9 +12,12 @@
 
     <string name="title_activity_register">Register</string>
 
-    <string name="name">Name</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
     <string name="email">Email</string>
     <string name="birthday">Birthday</string>
     <string name="phone_number">Phone Number</string>
 
+    <string name="reg_password">Choose a password</string>
+    <string name="reg_password2">Re-enter password</string>
 </resources>
