@@ -64,6 +64,11 @@ public class LoginActivity extends Activity {
                 // check if the Stored password matches with  Password entered by user
                 if (password.equals(storedPassword)) {
                     Toast.makeText(LoginActivity.this, "Congrats: Login Successfull", Toast.LENGTH_LONG).show();
+
+                    Intent i = new Intent(v.getContext(), MainActivity.class);
+
+                    startActivity(i);
+
                 } else {
                     Toast.makeText(LoginActivity.this, "User Name or Password does not match", Toast.LENGTH_LONG).show();
                 }
