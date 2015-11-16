@@ -20,4 +20,6 @@
 
     <string name="reg_password">Choose a password</string>
     <string name="reg_password2">Re-enter password</string>
+
+    <string name="cancel">Cancel</string>
 </resources>
