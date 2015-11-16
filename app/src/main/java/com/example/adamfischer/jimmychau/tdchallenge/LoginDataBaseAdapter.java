@@ -37,7 +37,7 @@ public class LoginDataBaseAdapter
         db.close();
     }
 
-    public  SQLiteDatabase getDatabaseInstance()
+    public SQLiteDatabase getDatabaseInstance()
     {
         return db;
     }
@@ -73,22 +73,17 @@ public class LoginDataBaseAdapter
         Cursor cursor=db.query("LOGIN", null, " USERNAME=?", new String[]{userName}, null, null, null);
         UserData entry = null;
 
-        if(cursor.getCount()<1) { // UserName doesn't exist
-            cursor.close();
-        } else {
+        if(cursor.getCount() > 0) { // UserName exists
+            cursor.moveToFirst();
 
+            long id = cursor.getLong(cursor.getColumnIndex("ID"));
+            String password = cursor.getString(cursor.getColumnIndex("PASSWORD"));
+            String firstName = cursor.getString(cursor.getColumnIndex("FIRSTNAME"));
+            String lastName = cursor.getString(cursor.getColumnIndex("LASTNAME"));
+            String email = cursor.getString(cursor.getColumnIndex("EMAIL"));
+
+            entry = new UserData(id, userName, password, firstName, lastName, email);
         }
-
-        cursor.moveToFirst();
-
-        entry = new UserData(
-                cursor.getLong(cursor.getColumnIndex("ID")),
-                cursor.getString(cursor.getColumnIndex("USERNAME")),
-                cursor.getString(cursor.getColumnIndex("PASSWORD")),
-                cursor.getString(cursor.getColumnIndex("FIRSTNAME")),
-                cursor.getString(cursor.getColumnIndex("LASTNAME")),
-                cursor.getString(cursor.getColumnIndex("EMAIL"))
-        );
 
         cursor.close();
         return entry;
