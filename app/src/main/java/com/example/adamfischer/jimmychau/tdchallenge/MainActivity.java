@@ -16,6 +16,11 @@ import android.view.ViewGroup;
 
 import io.karim.MaterialTabs;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.share.model.AppInviteContent;
+import com.facebook.share.widget.AppInviteDialog;
+
 //public class MainActivity extends Activity {
 public class MainActivity extends Activity {
 
@@ -31,6 +36,9 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
         setContentView(R.layout.activity_main);
 
         userData = (UserData)getIntent().getExtras().getSerializable("userData");
@@ -41,7 +49,8 @@ public class MainActivity extends Activity {
             new MyProjectsFragment(),
             new OtherProjectsFragment(),
             new ProfileFragment(),
-            new AboutFragment()
+            new AboutFragment(),
+                new MyProjectsSocal()
         };
 
         // Add adapter to viewPager
@@ -182,5 +191,51 @@ public class MainActivity extends Activity {
 
             return rootView;
         }
+    }
+
+    /***********************************************************************************************
+     My Projects tab
+     **********************************************************************************************/
+
+    public void appInviteClick(View view) {
+        String appLinkUrl, previewImageUrl;
+
+        appLinkUrl = "https://www.mydomain.com/myapplink";
+        previewImageUrl = "http://creativecurio.com/wp-content/uploads/2007/vm-logo-sm-1.gif";
+
+        if (AppInviteDialog.canShow()) {
+            AppInviteContent content = new AppInviteContent.Builder()
+                    .setApplinkUrl(appLinkUrl)
+                    .setPreviewImageUrl(previewImageUrl)
+                    .build();
+            AppInviteDialog.show(this, content);
+        }
+    }
+
+    public static class MyProjectsSocal extends TabFragment {
+        public MyProjectsSocal() {
+            this.tabTitle = "My Social";
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_social, container, false);
+
+            return rootView;
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        AppEventsLogger.deactivateApp(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AppEventsLogger.activateApp(this);
     }
 }
