@@ -14,7 +14,7 @@ public class RegisterActivity extends Activity {
     EditText editTextUserName,editTextPassword,editTextConfirmPassword,editTextFirstName,editTextLastName,editTextEmail;
     Button btnCreateAccount;
 
-    LoginDataBaseAdapter loginDataBaseAdapter;
+    DatabaseAdapter databaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +22,8 @@ public class RegisterActivity extends Activity {
         setContentView(R.layout.activity_register);
 
         // get Instance  of Database Adapter
-        loginDataBaseAdapter=new LoginDataBaseAdapter(this);
-        loginDataBaseAdapter=loginDataBaseAdapter.open();
+        databaseAdapter =new DatabaseAdapter(this);
+        databaseAdapter = databaseAdapter.open();
 
         // Get References of Views
         editTextUserName=(EditText)findViewById(R.id.usernameEditText);
@@ -88,7 +88,7 @@ public class RegisterActivity extends Activity {
 
                     UserData userData = new UserData(0, userName, password, firstName, lastName, eMail);
 
-                    loginDataBaseAdapter.insertEntry(userData);
+                    databaseAdapter.addUser(userData);
                     Toast.makeText(getApplicationContext(), "Account Successfully Created ", Toast.LENGTH_LONG).show();
                     finish();
                 }
@@ -101,7 +101,7 @@ public class RegisterActivity extends Activity {
         // TODO Auto-generated method stub
         super.onDestroy();
 
-        loginDataBaseAdapter.close();
+        databaseAdapter.close();
     }
 
     @Override

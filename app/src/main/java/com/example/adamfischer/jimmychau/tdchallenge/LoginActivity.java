@@ -1,7 +1,6 @@
 package com.example.adamfischer.jimmychau.tdchallenge;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,7 +13,7 @@ import android.widget.Toast;
 public class LoginActivity extends Activity {
 
     Button btnLogin,btnRegister;
-    LoginDataBaseAdapter loginDataBaseAdapter;
+    DatabaseAdapter databaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,10 +21,10 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
 
         // create a instance of SQLite Database
-        loginDataBaseAdapter=new LoginDataBaseAdapter(this);
-        loginDataBaseAdapter=loginDataBaseAdapter.open();
+        databaseAdapter = new DatabaseAdapter(this);
+        databaseAdapter = databaseAdapter.open();
 
-        // Get The Refference Of Buttons
+        // Get The Reference Of Buttons
         btnLogin=(Button)findViewById(R.id.loginButton);
         btnRegister=(Button)findViewById(R.id.registerButton);
 
@@ -52,13 +51,11 @@ public class LoginActivity extends Activity {
                 String password = editTextPassword.getText().toString();
 
                 // fetch the Password form database for respective user name
-                UserData userData = loginDataBaseAdapter.getSingleEntry(userName);
+                UserData userData = databaseAdapter.getUser(userName);
 
                 // check if the Stored password matches with  Password entered by user
                 if (userData != null && password.equals(userData.getPassword())) {
-                    userData.setPassword(null);
-
-                    Toast.makeText(LoginActivity.this, "Congrats: Login Successfull", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LoginActivity.this, "Congrats: Login Successful", Toast.LENGTH_LONG).show();
 
                     Intent i = new Intent(v.getContext(), MainActivity.class);
 
@@ -77,7 +74,7 @@ public class LoginActivity extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         // Close The Database
-        loginDataBaseAdapter.close();
+        databaseAdapter.close();
     }
 
     @Override
