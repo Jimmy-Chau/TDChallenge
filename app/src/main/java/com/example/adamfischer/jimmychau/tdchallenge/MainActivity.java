@@ -39,7 +39,6 @@ public class MainActivity extends Activity {
     private PagerAdapter pagerAdapter;
     private ViewPager viewPager;
 
-    CallbackManager callbackManager;
     ShareDialog shareDialog;
 
     @Override
@@ -48,7 +47,6 @@ public class MainActivity extends Activity {
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
-        callbackManager = CallbackManager.Factory.create();
         shareDialog = new ShareDialog(this);
 
         setContentView(R.layout.activity_main);
