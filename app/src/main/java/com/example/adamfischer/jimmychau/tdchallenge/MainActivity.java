@@ -18,10 +18,8 @@ import android.view.ViewGroup;
 import io.karim.MaterialTabs;
 
 import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
-import com.facebook.share.Sharer;
 import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.AppInviteDialog;
@@ -59,8 +57,7 @@ public class MainActivity extends Activity {
             new MyProjectsFragment(),
             new OtherProjectsFragment(),
             new ProfileFragment(),
-            new AboutFragment(),
-                new MyProjectsSocal()
+            new MyProjectsSocal()
         };
 
         // Add adapter to viewPager
@@ -179,32 +176,12 @@ public class MainActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
-
-
             return rootView;
         }
     }
 
     /***********************************************************************************************
-        About / Help tab
-     **********************************************************************************************/
-    public static class AboutFragment extends TabFragment {
-
-        public AboutFragment() {
-            this.tabTitle = "About";
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_other_projects, container, false);
-
-
-            return rootView;
-        }
-    }
-
-    /***********************************************************************************************
-     My Projects tab
+        Social tab
      **********************************************************************************************/
 
     public void appInviteClick(View view) {
