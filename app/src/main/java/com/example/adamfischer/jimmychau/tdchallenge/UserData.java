@@ -1,9 +1,11 @@
 package com.example.adamfischer.jimmychau.tdchallenge;
 
+import java.io.Serializable;
+
 /**
- * Created by Adam on 11/16/2015.
+ * Class to represent a user from the DB
  */
-public class UserData {
+public class UserData implements Serializable {
 
     private long ID;
     private String userName;

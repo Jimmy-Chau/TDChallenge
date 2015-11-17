@@ -20,15 +20,10 @@ import io.karim.MaterialTabs;
 public class MainActivity extends Activity {
 
     // Data about logged in user
-    UserData userData;
+    public static UserData userData;
 
     // Tabs
-    private final TabFragment[] tabFragments = {
-            new MyProjectsFragment(),
-            new OtherProjectsFragment(),
-            new ProfileFragment(),
-            new AboutFragment()
-    };
+    private TabFragment[] tabFragments;
 
     private PagerAdapter pagerAdapter;
     private ViewPager viewPager;
@@ -38,7 +33,16 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        userData = (UserData)getIntent().getExtras().getSerializable("userData");
         pagerAdapter = new PagerAdapter(getFragmentManager());
+
+        // Create tabs/pages
+        tabFragments = new TabFragment[] {
+            new MyProjectsFragment(),
+            new OtherProjectsFragment(),
+            new ProfileFragment(),
+            new AboutFragment()
+        };
 
         // Add adapter to viewPager
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -103,9 +107,9 @@ public class MainActivity extends Activity {
         public String tabTitle = "No Title";
     }
 
-    /******************************************************
+    /***********************************************************************************************
         My Projects tab
-     *****************************************************/
+     **********************************************************************************************/
 
     public void addNewProjectClick(View view) {
         Intent i = new Intent(this, CreateProjectActivity.class);
@@ -125,9 +129,9 @@ public class MainActivity extends Activity {
         }
     }
 
-    /******************************************************
+    /***********************************************************************************************
         Other Projects tab
-     *****************************************************/
+     **********************************************************************************************/
     public static class OtherProjectsFragment extends TabFragment {
 
         public OtherProjectsFragment() {
@@ -142,9 +146,9 @@ public class MainActivity extends Activity {
         }
     }
 
-    /******************************************************
+    /***********************************************************************************************
         My Profile tab
-     *****************************************************/
+     **********************************************************************************************/
     public static class ProfileFragment extends TabFragment {
 
         public ProfileFragment() {
@@ -161,13 +165,13 @@ public class MainActivity extends Activity {
         }
     }
 
-    /******************************************************
-        About/Help Tab
-     *****************************************************/
+    /***********************************************************************************************
+        About / Help tab
+     **********************************************************************************************/
     public static class AboutFragment extends TabFragment {
 
         public AboutFragment() {
-            this.tabTitle = "About / Help";
+            this.tabTitle = "About";
         }
 
         @Override
