@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -20,10 +21,10 @@ public class MainActivity extends Activity {
     UserData userData;
 
     // Tabs
-    private final String[] tabTitles = {
-            "My Projects",
-            "Other Projects",
-            "Profile"
+    private final TabFragment[] tabFragments = {
+            new MyProjectsFragment(),
+            new OtherProjectsFragment(),
+            new ProfileFragment()
     };
 
     private PagerAdapter pagerAdapter;
@@ -71,40 +72,55 @@ public class MainActivity extends Activity {
 
         @Override
         public Fragment getItem(int position) {
-            System.out.println("Showing fragment " + position);
-            switch (position) {
-                case 0: return new MyProjectsFragment();
-                case 1: return new OtherProjectsFragment();
-                case 2: return new ProfileFragment();
-                default:
-                    System.err.println("No fragment found for position " + position);
-                    return new MyProjectsFragment(); // go to main page
+             try {
+                return tabFragments[position];
+            } catch (IndexOutOfBoundsException ex) {
+                 System.err.println("Error finding fragment: " + ex.getMessage());
+                 return tabFragments[0];
             }
         }
 
         @Override
         public int getCount() {
-            return tabTitles.length;
+            return tabFragments.length;
         }
 
         @Override
         public CharSequence getPageTitle(int position) {
-            return tabTitles[position];
+            return tabFragments[position].tabTitle;
         }
     }
 
-    public static class MyProjectsFragment extends Fragment {
+    public static class TabFragment extends Fragment {
+        public static final String tabTitle = "No Title";
+    }
+
+    /******************************************************
+        My Projects tab
+     *****************************************************/
+
+    public void addNewProjectClick(View view) {
+        Intent i = new Intent(this, CreateProjectActivity.class);
+        startActivity(i);
+    }
+    
+    public static class MyProjectsFragment extends TabFragment {
+        public static final String tabTitle = "My Projects";
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_my_projects, container, false);
 
             return rootView;
         }
-
-
     }
 
-    public static class OtherProjectsFragment extends Fragment {
+    /******************************************************
+        Other Projects tab
+     *****************************************************/
+    public static class OtherProjectsFragment extends TabFragment {
+        public static final String tabTitle = "Other Projects";
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_other_projects, container, false);
@@ -115,7 +131,12 @@ public class MainActivity extends Activity {
         }
     }
 
-    public static class ProfileFragment extends Fragment {
+    /******************************************************
+        My Profile tab
+     *****************************************************/
+    public static class ProfileFragment extends TabFragment {
+        public static final String tabTitle = "My Profile";
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
