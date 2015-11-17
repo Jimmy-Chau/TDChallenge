@@ -1,15 +1,19 @@
 package com.example.adamfischer.jimmychau.tdchallenge;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 public class CreateProjectExtendedActivity extends Activity {
 
     String cType;
     String cName;
+    EditText projectTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +23,26 @@ public class CreateProjectExtendedActivity extends Activity {
         cType = getIntent().getExtras().getString("sType");
         cName = getIntent().getExtras().getString("sName");
 
+        projectTitle = (EditText)findViewById(R.id.projectTitleEditText);
+
+        projectTitle.setText(cName);
+
         Toast.makeText(CreateProjectExtendedActivity.this, cType + " " + cName, Toast.LENGTH_LONG).show();
+    }
+
+    public void onStart(){
+        super.onStart();
+
+        EditText txtDate=(EditText)findViewById(R.id.durationEditText);
+        txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View view, boolean hasfocus) {
+                if (hasfocus) {
+                    DateDialog dialog = new DateDialog(view);
+                    FragmentTransaction ft = getFragmentManager().beginTransaction();
+                    dialog.show(ft, "DatePicker");
+                }
+            }
+        });
     }
 
     @Override

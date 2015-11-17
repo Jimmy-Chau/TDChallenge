@@ -24,7 +24,7 @@
         <EditText
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/projectEditText" />
+            android:id="@+id/projectTitleEditText" />
 
     </LinearLayout>
 
@@ -68,7 +68,15 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></LinearLayout>
+            android:layout_height="match_parent">
+
+            <Spinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/typeSpinner"
+                android:entries="@array/type_selection" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -106,6 +114,14 @@
             android:text="Funding duration"
             android:id="@+id/durationTextView"
             android:layout_alignParentStart="true" />
+
+        <EditText
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/durationEditText"
+            android:hint="Click to select a date"
+            android:textSize="15sp"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
