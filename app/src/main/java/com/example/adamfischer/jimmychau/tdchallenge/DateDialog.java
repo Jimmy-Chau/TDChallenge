@@ -25,8 +25,11 @@ public class DateDialog extends DialogFragment implements DatePickerDialog.OnDat
         int month = c.get(Calendar.MONTH);
         int day = c.get(Calendar.DAY_OF_MONTH);
         // Create a new instance of DatePickerDialog and return it
-        return new DatePickerDialog(getActivity(), this, year, month, day);
-
+        //return new DatePickerDialog(getActivity(), this, year, month, day);
+        DatePickerDialog d = new DatePickerDialog(getActivity(), this, year, month, day);
+        DatePicker dp = d.getDatePicker();
+        dp.setMinDate(c.getTimeInMillis());
+        return d;
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {

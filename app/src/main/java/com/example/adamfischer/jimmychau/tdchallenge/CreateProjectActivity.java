@@ -18,7 +18,7 @@ public class CreateProjectActivity extends Activity {
     Spinner mySpinner;
     EditText projectName;
 
-    String selectedType;
+    int selectedType;
     String selectedName;
 
     @Override
@@ -34,68 +34,68 @@ public class CreateProjectActivity extends Activity {
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
                 switch(position){
                     case 0:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 1:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 2:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 3:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 4:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 5:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 6:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 7:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 8:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 9:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 10:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 11:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 12:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 13:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 14:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                     case 15:
-                        selectedType = parentView.getItemAtPosition(position).toString();
-
+                        //selectedType = parentView.getItemAtPosition(position).toString();
+                        selectedType = position;
                         break;
                 }
             }
@@ -138,5 +138,9 @@ public class CreateProjectActivity extends Activity {
         i.putExtra("sType", selectedType);
         i.putExtra("sName", selectedName);
         startActivity(i);
+    }
+
+    public void cancelOnClick(View view) {
+        finish();
     }
 }

@@ -7,27 +7,33 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class CreateProjectExtendedActivity extends Activity {
 
-    String cType;
+    int cType;
     String cName;
     EditText projectTitle;
+    Spinner tSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project_extended);
 
-        cType = getIntent().getExtras().getString("sType");
+        cType = getIntent().getExtras().getInt("sType");
         cName = getIntent().getExtras().getString("sName");
 
         projectTitle = (EditText)findViewById(R.id.projectTitleEditText);
 
         projectTitle.setText(cName);
 
-        Toast.makeText(CreateProjectExtendedActivity.this, cType + " " + cName, Toast.LENGTH_LONG).show();
+        tSpinner = (Spinner)findViewById(R.id.typeSpinner);
+
+        tSpinner.setSelection(cType);
+
+        //Toast.makeText(CreateProjectExtendedActivity.this, cType + " " + cName, Toast.LENGTH_LONG).show();
     }
 
     public void onStart(){
@@ -65,5 +71,9 @@ public class CreateProjectExtendedActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void cancelOnClick(View view) {
+        finish();
     }
 }
