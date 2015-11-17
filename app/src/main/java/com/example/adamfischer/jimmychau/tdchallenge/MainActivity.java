@@ -14,6 +14,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import io.karim.MaterialTabs;
+
 //public class MainActivity extends Activity {
 public class MainActivity extends Activity {
 
@@ -24,7 +26,8 @@ public class MainActivity extends Activity {
     private final TabFragment[] tabFragments = {
             new MyProjectsFragment(),
             new OtherProjectsFragment(),
-            new ProfileFragment()
+            new ProfileFragment(),
+            new AboutFragment()
     };
 
     private PagerAdapter pagerAdapter;
@@ -37,8 +40,13 @@ public class MainActivity extends Activity {
 
         pagerAdapter = new PagerAdapter(getFragmentManager());
 
+        // Add adapter to viewPager
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
+
+        // bind tabs to viewPager
+        MaterialTabs tabs = (MaterialTabs) findViewById(R.id.tabs);
+        tabs.setViewPager(viewPager);
     }
 
     @Override
@@ -63,7 +71,7 @@ public class MainActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    /* classes for working with tab views */
+    //--------- classes for working with tab views -------------
     public class PagerAdapter extends FragmentPagerAdapter {
 
         public PagerAdapter(FragmentManager fm) {
@@ -92,7 +100,7 @@ public class MainActivity extends Activity {
     }
 
     public static class TabFragment extends Fragment {
-        public static final String tabTitle = "No Title";
+        public String tabTitle = "No Title";
     }
 
     /******************************************************
@@ -103,9 +111,11 @@ public class MainActivity extends Activity {
         Intent i = new Intent(this, CreateProjectActivity.class);
         startActivity(i);
     }
-    
+
     public static class MyProjectsFragment extends TabFragment {
-        public static final String tabTitle = "My Projects";
+        public MyProjectsFragment() {
+            this.tabTitle = "My Projects";
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -119,13 +129,14 @@ public class MainActivity extends Activity {
         Other Projects tab
      *****************************************************/
     public static class OtherProjectsFragment extends TabFragment {
-        public static final String tabTitle = "Other Projects";
+
+        public OtherProjectsFragment() {
+            this.tabTitle = "Other Projects";
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_other_projects, container, false);
-
-
 
             return rootView;
         }
@@ -135,12 +146,33 @@ public class MainActivity extends Activity {
         My Profile tab
      *****************************************************/
     public static class ProfileFragment extends TabFragment {
-        public static final String tabTitle = "My Profile";
+
+        public ProfileFragment() {
+            this.tabTitle = "My Profile";
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
+
+
+            return rootView;
+        }
+    }
+
+    /******************************************************
+        About/Help Tab
+     *****************************************************/
+    public static class AboutFragment extends TabFragment {
+
+        public AboutFragment() {
+            this.tabTitle = "About / Help";
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_other_projects, container, false);
 
 
             return rootView;
