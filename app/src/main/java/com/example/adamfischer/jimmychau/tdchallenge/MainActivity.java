@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
@@ -16,10 +17,15 @@ import android.view.ViewGroup;
 
 import io.karim.MaterialTabs;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.share.Sharer;
 import com.facebook.share.model.AppInviteContent;
+import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.AppInviteDialog;
+import com.facebook.share.widget.ShareDialog;
 
 //public class MainActivity extends Activity {
 public class MainActivity extends Activity {
@@ -33,11 +39,17 @@ public class MainActivity extends Activity {
     private PagerAdapter pagerAdapter;
     private ViewPager viewPager;
 
+    CallbackManager callbackManager;
+    ShareDialog shareDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         FacebookSdk.sdkInitialize(getApplicationContext());
+
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
 
         setContentView(R.layout.activity_main);
 
@@ -209,6 +221,20 @@ public class MainActivity extends Activity {
                     .setPreviewImageUrl(previewImageUrl)
                     .build();
             AppInviteDialog.show(this, content);
+        }
+    }
+
+
+    public void shareLinkOnClick(View view) {
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                    .setContentTitle("Hello Facebook")
+                    .setContentDescription(
+                            "The 'Hello Facebook' sample  showcases simple Facebook integration")
+                    .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+                    .build();
+
+            shareDialog.show(linkContent);
         }
     }
 

@@ -28,4 +28,13 @@
         android:layout_alignParentEnd="true"
         android:onClick="appInviteClick" />
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Share Link"
+        android:id="@+id/shareLinkButton"
+        android:layout_above="@+id/appInviteButton"
+        android:layout_alignParentStart="true"
+        android:onClick="shareLinkOnClick" />
+
 </RelativeLayout>
