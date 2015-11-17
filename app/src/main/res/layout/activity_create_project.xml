@@ -16,45 +16,53 @@
         android:layout_gravity="center_horizontal"
         android:layout_centerHorizontal="true" />
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout"
-        android:layout_centerVertical="true">
+        android:layout_height="fill_parent"
+        android:id="@+id/mainScrollView"
+        android:layout_below="@+id/headerTextView"
+        android:layout_above="@+id/startButton">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="I want to start a "
-            android:id="@+id/typeTextView"
-            android:layout_gravity="center_horizontal" />
-
-        <Spinner
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/typeSpinner"
-            android:layout_gravity="center_horizontal"
-            android:entries="@array/type_selection" />
+            android:id="@+id/linearLayout"
+            android:layout_centerVertical="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="project called"
-            android:id="@+id/projectNameTextView"
-            android:layout_gravity="center_horizontal" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="I want to start a "
+                android:id="@+id/typeTextView"
+                android:layout_gravity="center_horizontal" />
 
-        <EditText
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/projectNameEditText"
-            android:layout_below="@+id/linearLayout"
-            android:layout_alignParentStart="true"
-            android:layout_gravity="center_horizontal" />
+            <Spinner
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/typeSpinner"
+                android:layout_gravity="center_horizontal"
+                android:entries="@array/type_selection" />
 
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="project called"
+                android:id="@+id/projectNameTextView"
+                android:layout_gravity="center_horizontal" />
+
+            <EditText
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/projectNameEditText"
+                android:layout_below="@+id/linearLayout"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center_horizontal" />
+
+        </LinearLayout>
+    </ScrollView>
 
     <Button
         android:layout_width="fill_parent"
