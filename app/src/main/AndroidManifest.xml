@@ -42,6 +42,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.adamfischer.jimmychau.tdchallenge.MainActivity" />
         </activity>
+        <activity
+            android:name=".CreateProjectExtendedActivity"
+            android:label="@string/title_activity_create_project_extended"
+            android:parentActivityName=".CreateProjectActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.adamfischer.jimmychau.tdchallenge.CreateProjectActivity" />
+        </activity>
     </application>
 
 </manifest>

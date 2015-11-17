@@ -24,4 +24,24 @@
     <string name="cancel">Cancel</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_create_project">CreateProjectActivity</string>
+    <string name="title_activity_create_project_extended">CreateProjectExtendedActivity</string>
+
+
+    <string-array name="type_selection">
+        <item>Art</item>
+        <item>Comics</item>
+        <item>Crafts</item>
+        <item>Dance</item>
+        <item>Design</item>
+        <item>Fashion</item>
+        <item>Film and Video</item>
+        <item>Food</item>
+        <item>Games</item>
+        <item>Journalism</item>
+        <item>Music</item>
+        <item>Photography</item>
+        <item>Publishing</item>
+        <item>Technology</item>
+        <item>Theater</item>
+    </string-array>
 </resources>
