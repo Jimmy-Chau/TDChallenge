@@ -20,7 +20,7 @@ import io.karim.MaterialTabs;
 public class MainActivity extends Activity {
 
     // Data about logged in user
-    public static UserData userData;
+    private static UserData userData;
 
     // Tabs
     private TabFragment[] tabFragments;
@@ -104,6 +104,7 @@ public class MainActivity extends Activity {
     }
 
     public static class TabFragment extends Fragment {
+        private static UserData userData = MainActivity.userData;
         public String tabTitle = "No Title";
     }
 
