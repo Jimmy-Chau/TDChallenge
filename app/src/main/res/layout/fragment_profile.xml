@@ -7,14 +7,197 @@
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
                 android:paddingBottom="@dimen/activity_vertical_margin"
+                android:clipToPadding="false"
                 tools:context="com.example.adamfischer.jimmychau.tdchallenge.MainActivity$MyProjectsFragment">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="My Profile"
-        android:id="@+id/textViewMyProfile"
-        android:layout_alignParentTop="true"
+        android:text="Welcome, "
+        android:id="@+id/textViewProfileWelcome" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/textViewMyName"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentStart="false"
+        android:layout_toRightOf="@+id/textViewProfileWelcome" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="My Account Balance"
+        android:id="@+id/textView2"
+        android:layout_centerVertical="true"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold"
+        android:textSize="40dp"
+        android:id="@+id/textViewAccountBalance"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentStart="true"
+        android:text="$100,000,000.00" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Funds"
+        android:id="@+id/buttonAddFunds"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:onClick="onAddFundsClick" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:id="@+id/addFundsModal"
+        android:visibility="visible"
+        android:layout_alignParentEnd="false"
+        android:layout_alignParentBottom="true"
+        android:transitionGroup="false"
+        android:layout_marginLeft="-16dp"
+        android:layout_marginRight="-16dp"
+        android:layout_marginBottom="-16dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Add Funds"
+            android:textColor="#000"
+            android:id="@+id/textViewAddFundsTitle" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/editTextAddFundsAmount"
+            android:layout_alignParentStart="false"
+            android:hint="($0.00)"
+            android:layout_below="@+id/textViewAddFundsTitle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Card Type"
+            android:textColor="#777"
+            android:id="@+id/textView3"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="false"
+            android:layout_below="@+id/editTextAddFundsAmount"
+            android:layout_alignLeft="@+id/spinnerAccountType" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerAccountType"
+            android:entries="@array/payment_options"
+            android:spinnerMode="dialog"
+            android:layout_below="@+id/textView3" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Card Number"
+            android:textColor="#777"
+            android:id="@+id/textView8"
+            android:layout_alignParentStart="false"
+            android:layout_alignParentEnd="false"
+            android:layout_alignLeft="@+id/editTextCardNumber"
+            android:layout_below="@+id/spinnerAccountType" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextCardNumber"
+            android:layout_alignParentStart="false"
+            android:hint="xxxx-xxxx-xxxx-xxxx"
+            android:layout_below="@+id/textView8" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Name on Card"
+            android:textColor="#777"
+            android:id="@+id/textView9"
+            android:layout_alignLeft="@+id/editTextNameOnCard"
+            android:layout_below="@+id/editTextCardNumber" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/editTextNameOnCard"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView9"
+            android:layout_alignParentEnd="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Expiration date"
+            android:textColor="#777"
+            android:id="@+id/textView11"
+            android:layout_below="@+id/editTextCardNumber"
+            android:layout_alignParentStart="false"
+            android:layout_alignLeft="@+id/spinnerMonths" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerMonths"
+            android:layout_below="@+id/textView11"
+            android:layout_alignParentStart="false"
+            android:entries="@array/month_numbers"
+            android:layout_toRightOf="@+id/editTextNameOnCard" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinnerYears"
+            android:layout_toEndOf="@id/spinnerMonths" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:id="@+id/buttonCancelAddFunds"
+            android:onClick="onCancelAddFundsClick"
+            android:layout_alignParentBottom="false"
+            android:layout_below="@+id/spinnerMonths"
+            android:layout_toLeftOf="@+id/buttonAcceptAddFunds" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accept"
+            android:id="@+id/buttonAcceptAddFunds"
+            android:onClick="onAcceptAddFundsClick"
+            android:layout_alignParentBottom="false"
+            android:layout_below="@+id/spinnerMonths"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+
 </RelativeLayout>

@@ -18,6 +18,9 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import io.karim.MaterialTabs;
 
@@ -29,13 +32,17 @@ import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.AppInviteDialog;
 import com.facebook.share.widget.ShareDialog;
 
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 //public class MainActivity extends Activity {
 public class MainActivity extends Activity {
 
     // Data about logged in user
     private static UserData userData;
+
+    private DatabaseAdapter dbAdapter;
 
     // Tabs
     private TabFragment[] tabFragments;
@@ -48,6 +55,8 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        dbAdapter = new DatabaseAdapter(this).open();
 
         FacebookSdk.sdkInitialize(getApplicationContext());
 
@@ -128,9 +137,12 @@ public class MainActivity extends Activity {
         }
     }
 
+    /**
+     * Root class for the tab fragments
+     */
     public static class TabFragment extends Fragment {
-        private static UserData userData = MainActivity.userData;
         public String tabTitle = "No Title";
+        protected MainActivity mainActivity;
     }
 
     /***********************************************************************************************
@@ -144,9 +156,7 @@ public class MainActivity extends Activity {
     }
 
     public static class MyProjectsFragment extends TabFragment {
-        private static DatabaseAdapter dbAdapter;
         private static ArrayList<ProjectData> myProjects;
-
         private ArrayAdapter<ProjectData> arrayAdapter;
 
         public MyProjectsFragment() {
@@ -156,10 +166,10 @@ public class MainActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_my_projects, container, false);
+            mainActivity = (MainActivity)getActivity();
 
             // load projects for signed-on user
-            dbAdapter = new DatabaseAdapter(getActivity()).open();
-            myProjects = dbAdapter.getProjectsFor(userData.getID());
+            myProjects = mainActivity.dbAdapter.getProjectsFor(userData.getID());
 
             // populate list
             ListView listView = (ListView)rootView.findViewById(R.id.listViewMyProjects);
@@ -190,7 +200,7 @@ public class MainActivity extends Activity {
             myProjects.clear();
             arrayAdapter.clear();
 
-            myProjects.addAll(dbAdapter.getProjectsFor(userData.getID()));
+            myProjects.addAll(mainActivity.dbAdapter.getProjectsFor(userData.getID()));
             arrayAdapter.notifyDataSetChanged();
         }
     }
@@ -200,7 +210,6 @@ public class MainActivity extends Activity {
      **********************************************************************************************/
     public static class OtherProjectsFragment extends TabFragment {
 
-        private static DatabaseAdapter dbAdapter;
         private static ArrayList<ProjectData> otherProjects;
 
         private ArrayAdapter<ProjectData> arrayAdapter;
@@ -212,10 +221,10 @@ public class MainActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_other_projects, container, false);
+            mainActivity = (MainActivity)getActivity();
 
             // load projects for signed-on user
-            dbAdapter = new DatabaseAdapter(getActivity()).open();
-            otherProjects = dbAdapter.getOtherProjects(userData.getID());
+            otherProjects = mainActivity.dbAdapter.getOtherProjects(userData.getID());
 
             // populate list
             ListView listView = (ListView)rootView.findViewById(R.id.listViewOtherProjects);
@@ -245,7 +254,7 @@ public class MainActivity extends Activity {
             otherProjects.clear();
             arrayAdapter.clear();
 
-            otherProjects.addAll(dbAdapter.getOtherProjects(userData.getID()));
+            otherProjects.addAll(mainActivity.dbAdapter.getOtherProjects(userData.getID()));
             arrayAdapter.notifyDataSetChanged();
         }
     }
@@ -253,6 +262,21 @@ public class MainActivity extends Activity {
     /***********************************************************************************************
         My Profile tab
      **********************************************************************************************/
+    public void onAddFundsClick(View view) {
+        RelativeLayout addFundsModal = (RelativeLayout)findViewById(R.id.addFundsModal);
+
+        // TODO: Reset values on modal before showing
+
+        // show modal
+        addFundsModal.setVisibility(View.VISIBLE);
+    }
+
+    public void onAcceptAddFundsClick(View view) {
+        RelativeLayout addFundsModal = (RelativeLayout)findViewById(R.id.addFundsModal);
+
+        addFundsModal.setVisibility(View.GONE);
+    }
+
     public static class ProfileFragment extends TabFragment {
 
         public ProfileFragment() {
@@ -262,6 +286,31 @@ public class MainActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+
+            // Set up modal
+            RelativeLayout addFundsModal = (RelativeLayout)rootView.findViewById(R.id.addFundsModal);
+            addFundsModal.setVisibility(View.GONE);
+
+            // year spinner
+            final ArrayList<Integer> yearArray = new ArrayList<>(20);
+            int curYear = Calendar.getInstance().get(Calendar.YEAR);
+            for (int i = 0; i <= 20; ++i) {
+                yearArray.add(curYear + i);
+            }
+            Spinner spinnerYears = (Spinner)rootView.findViewById(R.id.spinnerYears);
+            ArrayAdapter<Integer> arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, yearArray);
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinnerYears.setAdapter(arrayAdapter);
+
+            // set up main page
+            TextView txtMyName = (TextView)rootView.findViewById(R.id.textViewMyName);
+            txtMyName.setText(userData.getFirstName());
+
+            // account balance
+            TextView txtBalance = (TextView)rootView.findViewById(R.id.textViewAccountBalance);
+            NumberFormat formatter = NumberFormat.getCurrencyInstance();
+            String balanceStr = formatter.format(userData.getBalance());
+            txtBalance.setText(balanceStr);
 
             return rootView;
         }
