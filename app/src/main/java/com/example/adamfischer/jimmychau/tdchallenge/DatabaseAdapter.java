@@ -6,11 +6,13 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.util.ArrayList;
+
 public class DatabaseAdapter {
     static final String DATABASE_NAME = "login.db";
-    static final int DATABASE_VERSION = 2;
+    static final int DATABASE_VERSION = 1;
 
-    /* Table Names */
+    /********* Tables names *******/
     static final String TABLE_USERS = "Users";
     static final String TABLE_PROJECTS = "Projects";
 
@@ -36,7 +38,7 @@ public class DatabaseAdapter {
 //            "( " +"ID"+" integer primary key autoincrement,"
 //                + "USERNAME text not null unique, PASSWORD text not null, FIRSTNAME text not null, LASTNAME text not null, EMAIL text);";
 
-    static final String DATABASE_CREATE =
+    static final String CREATE_TABLE_USERS =
             "CREATE TABLE "+TABLE_USERS+" (" +
                 USERS_ID            + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 USERS_USERNAME      + " TEXT NOT NULL UNIQUE," +
@@ -44,8 +46,9 @@ public class DatabaseAdapter {
                 USERS_FIRST_NAME    + " TEXT NOT NULL," +
                 USERS_LAST_NAME     + " TEXT NOT NULL," +
                 USERS_EMAIL         + " TEXT" +
-            ");" +
-            "CREATE TABLE "+TABLE_PROJECTS+" (" +
+            ")";
+     static final String CREATE_TABLE_PROJECTS =
+             "CREATE TABLE "+TABLE_PROJECTS+" (" +
                 PROJECTS_ID         + " INTEGER PRIMARY KEY AUTOINCREMENT," +
                 PROJECTS_USER_ID    + " INTEGER NOT NULL," +
                 PROJECTS_NAME       + " TEXT NOT NULL UNIQUE," +
@@ -54,7 +57,7 @@ public class DatabaseAdapter {
                 PROJECTS_DATE       + " TEXT NOT NULL," +
                 PROJECTS_GOAL       + " INTEGER NOT NULL," +
                 "FOREIGN KEY ("+PROJECTS_USER_ID+") REFERENCES "+TABLE_USERS+"("+USERS_ID+")" +
-            ");";
+            ")";
 
     // Variable to hold the database instance
     public SQLiteDatabase db;
@@ -159,7 +162,7 @@ public class DatabaseAdapter {
                 TABLE_USERS,
                 updatedValues,
                 USERS_ID + "=?",
-                new String[] {user_id}
+                new String[]{user_id}
         );
     }
 
@@ -169,7 +172,6 @@ public class DatabaseAdapter {
     public long addProject(ProjectData project) {
         ContentValues newValues = new ContentValues();
 
-        newValues.put(PROJECTS_ID, project.getID());
         newValues.put(PROJECTS_USER_ID, project.getUserID());
         newValues.put(PROJECTS_NAME, project.getName());
         newValues.put(PROJECTS_TYPE, project.getType());
@@ -178,6 +180,28 @@ public class DatabaseAdapter {
         newValues.put(PROJECTS_GOAL, project.getGoal());
 
         return db.insert(TABLE_PROJECTS, null, newValues);
+    }
+
+    public ArrayList<ProjectData> getProjectsFor(long userID) {
+        Cursor cursor = db.query(TABLE_PROJECTS, null, PROJECTS_USER_ID+"="+userID, null, null, null, null);
+
+        ArrayList<ProjectData> projects = new ArrayList<>();
+        if(cursor.getCount() > 0) { // Projects exists for user
+            while (cursor.moveToNext()) {
+                long id = cursor.getLong(cursor.getColumnIndex(PROJECTS_ID));
+                //long userID = cursor.getLong(cursor.getColumnIndex(PROJECTS_USER_ID));
+                String name = cursor.getString(cursor.getColumnIndex(PROJECTS_NAME));
+                String type = cursor.getString(cursor.getColumnIndex(PROJECTS_TYPE));
+                String blurb = cursor.getString(cursor.getColumnIndex(PROJECTS_BLURB));
+                String date = cursor.getString(cursor.getColumnIndex(PROJECTS_DATE));
+                long goal = cursor.getLong(cursor.getColumnIndex(PROJECTS_GOAL));
+
+                projects.add(new ProjectData(id, userID , name, type, blurb, date, goal));
+            }
+        }
+
+        cursor.close();
+        return projects;
     }
 
     /**

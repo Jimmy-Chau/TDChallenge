@@ -3,6 +3,7 @@ package com.example.adamfischer.jimmychau.tdchallenge;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,10 +22,16 @@ public class CreateProjectActivity extends Activity {
     int selectedType;
     String selectedName;
 
+    long userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project);
+
+        userID = getIntent().getExtras().getLong("userID");
+        Log.d("create1", ""+userID);
+
 
         mySpinner = (Spinner)findViewById(R.id.typeSpinner);
 
@@ -137,7 +144,9 @@ public class CreateProjectActivity extends Activity {
         Intent i = new Intent(this, CreateProjectExtendedActivity.class);
         i.putExtra("sType", selectedType);
         i.putExtra("sName", selectedName);
+        i.putExtra("userID", userID);
         startActivity(i);
+        finish();
     }
 
     public void cancelOnClick(View view) {

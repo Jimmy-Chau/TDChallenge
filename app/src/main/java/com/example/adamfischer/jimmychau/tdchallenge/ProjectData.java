@@ -79,4 +79,9 @@ public class ProjectData implements Serializable {
     public void setGoal(long goal) {
         this.goal = goal;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

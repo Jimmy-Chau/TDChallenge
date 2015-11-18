@@ -9,11 +9,14 @@ import android.net.Uri;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import io.karim.MaterialTabs;
 
@@ -24,6 +27,8 @@ import com.facebook.share.model.AppInviteContent;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.AppInviteDialog;
 import com.facebook.share.widget.ShareDialog;
+
+import java.util.ArrayList;
 
 //public class MainActivity extends Activity {
 public class MainActivity extends Activity {
@@ -50,14 +55,15 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         userData = (UserData)getIntent().getExtras().getSerializable("userData");
+
         pagerAdapter = new PagerAdapter(getFragmentManager());
 
         // Create tabs/pages
         tabFragments = new TabFragment[] {
             new MyProjectsFragment(),
             new OtherProjectsFragment(),
+            new SocialFragment(),
             new ProfileFragment(),
-            new MyProjectsSocal()
         };
 
         // Add adapter to viewPager
@@ -130,10 +136,16 @@ public class MainActivity extends Activity {
 
     public void addNewProjectClick(View view) {
         Intent i = new Intent(this, CreateProjectActivity.class);
+        i.putExtra("userID", userData.getID());
         startActivity(i);
     }
 
     public static class MyProjectsFragment extends TabFragment {
+        private static DatabaseAdapter dbAdapter;
+        private static ArrayList<ProjectData> myProjects;
+
+        private ArrayAdapter<ProjectData> arrayAdapter;
+
         public MyProjectsFragment() {
             this.tabTitle = "My Projects";
         }
@@ -142,7 +154,28 @@ public class MainActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_my_projects, container, false);
 
+            // load projects for signed-on user
+            dbAdapter = new DatabaseAdapter(getActivity()).open();
+            myProjects = dbAdapter.getProjectsFor(userData.getID());
+
+            // populate list
+            ListView listView = (ListView)rootView.findViewById(R.id.listViewMyProjects);
+
+            arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, myProjects);
+            listView.setAdapter(arrayAdapter);
+
             return rootView;
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            Log.d("MyProjectsFragment", "onResume called...");
+            myProjects.clear();
+            arrayAdapter.clear();
+
+            myProjects.addAll(dbAdapter.getProjectsFor(userData.getID()));
+            arrayAdapter.notifyDataSetChanged();
         }
     }
 
@@ -169,7 +202,7 @@ public class MainActivity extends Activity {
     public static class ProfileFragment extends TabFragment {
 
         public ProfileFragment() {
-            this.tabTitle = "My Profile";
+            this.tabTitle = "Profile";
         }
 
         @Override
@@ -213,9 +246,9 @@ public class MainActivity extends Activity {
         }
     }
 
-    public static class MyProjectsSocal extends TabFragment {
-        public MyProjectsSocal() {
-            this.tabTitle = "My Social";
+    public static class SocialFragment extends TabFragment {
+        public SocialFragment() {
+            this.tabTitle = "Social";
         }
 
         @Override

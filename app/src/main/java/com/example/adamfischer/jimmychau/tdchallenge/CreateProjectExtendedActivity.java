@@ -3,6 +3,7 @@ package com.example.adamfischer.jimmychau.tdchallenge;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -14,13 +15,21 @@ public class CreateProjectExtendedActivity extends Activity {
 
     int cType;
     String cName;
-    EditText projectTitle;
+    long userID;
+    EditText projectTitle, txtBlurb, txtDuration, txtGoal;
     Spinner tSpinner;
+    DatabaseAdapter databaseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_project_extended);
+
+        userID = getIntent().getExtras().getLong("userID");
+        Log.d("create2", ""+userID);
+
+        // create a instance of SQLite Database
+        databaseAdapter = new DatabaseAdapter(this).open();
 
         cType = getIntent().getExtras().getInt("sType");
         cName = getIntent().getExtras().getString("sName");
@@ -32,6 +41,12 @@ public class CreateProjectExtendedActivity extends Activity {
         tSpinner = (Spinner)findViewById(R.id.typeSpinner);
 
         tSpinner.setSelection(cType);
+
+
+        //other view refs
+        txtBlurb = (EditText)findViewById(R.id.blurbEditText);
+        txtDuration = (EditText)findViewById(R.id.durationEditText);
+        txtGoal = (EditText)findViewById(R.id.goalEditText);
 
         //Toast.makeText(CreateProjectExtendedActivity.this, cType + " " + cName, Toast.LENGTH_LONG).show();
     }
@@ -74,6 +89,40 @@ public class CreateProjectExtendedActivity extends Activity {
     }
 
     public void cancelOnClick(View view) {
+        finish();
+    }
+
+    public void onSaveClick(View view) {
+
+        String name = projectTitle.getText().toString();
+        String type = tSpinner.getSelectedItem().toString();// getItemAtPosition(position).toString()
+        String blurb = txtBlurb.getText().toString();
+        String date = txtDuration.getText().toString();
+
+        String goalStr = txtGoal.getText().toString();
+        goalStr = goalStr.replace(".","");
+
+        long goal = -1;
+        try {
+            goal = Long.parseLong(goalStr);
+        } catch (NumberFormatException ex) {
+            Log.e("CreateProjectExtended", ex.getMessage());
+            Toast.makeText(this, "Invalid goal value", Toast.LENGTH_LONG).show();
+        }
+
+        ProjectData newProject = new ProjectData(0, userID, name, type, blurb, date, goal);
+
+        Log.i("CreateProjectExtended", "Attempting to add new project: " + name);
+
+        long newID = databaseAdapter.addProject(newProject);
+
+        if (newID == -1) {
+            Log.e("CreateProjectExtended", "Error adding project");
+            Toast.makeText(this, "Failed to add new project", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this, "Added new project " + name, Toast.LENGTH_LONG).show();
+        }
+
         finish();
     }
 }
