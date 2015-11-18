@@ -7,18 +7,25 @@
     tools:context="com.example.adamfischer.jimmychau.tdchallenge.OtherActivity"
     android:background="#007701">
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView7"
+        android:src="@drawable/business8" />
+
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
-        android:layout_height="200dip"
+        android:layout_height="150dip"
         android:id="@+id/graph"
-        android:layout_below="@+id/textView" />
+        android:layout_below="@+id/imageView7" />
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/graph"
-        android:id="@+id/infoLayout">
+        android:id="@+id/infoLayout"
+        android:layout_above="@+id/donateButton">
 
         <LinearLayout
             android:orientation="horizontal"
