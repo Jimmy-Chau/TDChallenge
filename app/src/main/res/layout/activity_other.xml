@@ -11,7 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/imageView7"
-        android:src="@drawable/business8" />
+        android:src="@drawable/chart44" />
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
@@ -150,7 +150,16 @@
         android:layout_height="wrap_content"
         android:text="Donate"
         android:id="@+id/donateButton"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/cancelButton" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancelButton"
+        android:onClick="cancelOnClick"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>
