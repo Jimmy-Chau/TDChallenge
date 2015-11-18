@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
+import java.util.Arrays;
+
 public class EditActivity extends Activity {
 
     DatabaseAdapter databaseAdapter;
@@ -42,10 +44,14 @@ public class EditActivity extends Activity {
         goal = (EditText) findViewById(R.id.goalEditText);
 
         pd = (ProjectData)getIntent().getExtras().getSerializable("iItem");
+        
+        String[] array = getResources().getStringArray(R.array.type_selection);
+
+        int typePosition = Arrays.asList(array).indexOf(pd.getType());
 
         pt.setText(pd.getName());
         blurb.setText(pd.getBlurb());
-       //ts.setSelection();
+       ts.setSelection(typePosition);
        //pl.setText();
        date.setText(pd.getDate());
         goal.setText(pd.getGoal() + "");
