@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.Arrays;
 
@@ -29,6 +30,11 @@ public class EditActivity extends Activity {
 
     int typePosition;
 
+    String name;
+    String type;
+    String bl;
+    String da;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,17 +51,17 @@ public class EditActivity extends Activity {
         date = (EditText) findViewById(R.id.durationEditText);
         goal = (EditText) findViewById(R.id.goalEditText);
 
-        pd = (ProjectData)getIntent().getExtras().getSerializable("iItem");
-        
+        pd = (ProjectData) getIntent().getExtras().getSerializable("iItem");
+
         String[] array = getResources().getStringArray(R.array.type_selection);
 
         typePosition = Arrays.asList(array).indexOf(pd.getType());
 
         pt.setText(pd.getName());
         blurb.setText(pd.getBlurb());
-       ts.setSelection(typePosition);
-       //pl.setText();
-       date.setText(pd.getDate());
+        ts.setSelection(typePosition);
+        //pl.setText();
+        date.setText(pd.getDate());
         goal.setText(pd.getGoal() + "");
     }
 
@@ -117,6 +123,11 @@ public class EditActivity extends Activity {
     }
 
     public void onSaveClick(View view) {
+        name = pt.getText().toString();
+        type = ts.getSelectedItem().toString();
+        bl = blurb.getText().toString();
+        da = date.getText().toString();
+
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
         builder.setTitle("Do this action");
@@ -124,30 +135,46 @@ public class EditActivity extends Activity {
 
         builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
 
-            public void onClick(DialogInterface dialog, int which) {
-                // Do do my action here
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do do my action here
 
-                pd.setBlurb(blurb.getText().toString());
-                pd.setDate(date.getText().toString());
-                pd.setName(pt.getText().toString());
-                pd.setType(ts.getSelectedItem().toString());
+                        if (name.equals("")) {
+                            Toast.makeText(getApplicationContext(), "Project title is empty!", Toast.LENGTH_LONG).show();
+                        } else if (type.equals("")) {
+                            Toast.makeText(getApplicationContext(), "Category not selected!", Toast.LENGTH_LONG).show();
+                        } else if (bl.equals("")) {
+                            Toast.makeText(getApplicationContext(), "Shot blurb is empty!", Toast.LENGTH_LONG).show();
+                        } else if (da.equals("")) {
+                            Toast.makeText(getApplicationContext(), "Date is empty!", Toast.LENGTH_LONG).show();
+                        } else {
+                            pd.setBlurb(blurb.getText().toString());
+                            pd.setDate(date.getText().toString());
+                            pd.setName(pt.getText().toString());
+                            pd.setType(ts.getSelectedItem().toString());
 
-                databaseAdapter.updateProject(pd);
+                            databaseAdapter.updateProject(pd);
 
-                dialog.dismiss();
-                finish();
-            }
+                            dialog.dismiss();
+                            finish();
+                        }
+                    }
 
-        });
+                }
 
-        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        );
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // I do not need any action here you might
-                dialog.dismiss();
-            }
-        });
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener()
+
+                {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // I do not need any action here you might
+                        dialog.dismiss();
+                    }
+                }
+
+        );
 
         AlertDialog alert = builder.create();
         alert.show();

@@ -26,7 +26,7 @@ public class CreateProjectExtendedActivity extends Activity {
         setContentView(R.layout.activity_create_project_extended);
 
         userID = getIntent().getExtras().getLong("userID");
-        Log.d("create2", ""+userID);
+        Log.d("create2", "" + userID);
 
         // create a instance of SQLite Database
         databaseAdapter = new DatabaseAdapter(this).open();
@@ -34,26 +34,26 @@ public class CreateProjectExtendedActivity extends Activity {
         cType = getIntent().getExtras().getInt("sType");
         cName = getIntent().getExtras().getString("sName");
 
-        projectTitle = (EditText)findViewById(R.id.projectTitleEditText);
+        projectTitle = (EditText) findViewById(R.id.projectTitleEditText);
 
         projectTitle.setText(cName);
 
-        tSpinner = (Spinner)findViewById(R.id.typeSpinner);
+        tSpinner = (Spinner) findViewById(R.id.typeSpinner);
 
         tSpinner.setSelection(cType);
 
         //other view refs
-        txtBlurb = (EditText)findViewById(R.id.blurbEditText);
-        txtDuration = (EditText)findViewById(R.id.durationEditText);
-        txtGoal = (EditText)findViewById(R.id.goalEditText);
+        txtBlurb = (EditText) findViewById(R.id.blurbEditText);
+        txtDuration = (EditText) findViewById(R.id.durationEditText);
+        txtGoal = (EditText) findViewById(R.id.goalEditText);
 
         //Toast.makeText(CreateProjectExtendedActivity.this, cType + " " + cName, Toast.LENGTH_LONG).show();
     }
 
-    public void onStart(){
+    public void onStart() {
         super.onStart();
 
-        EditText txtDate=(EditText)findViewById(R.id.durationEditText);
+        EditText txtDate = (EditText) findViewById(R.id.durationEditText);
         txtDate.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View view, boolean hasfocus) {
                 if (hasfocus) {
@@ -99,29 +99,39 @@ public class CreateProjectExtendedActivity extends Activity {
         String date = txtDuration.getText().toString();
 
         String goalStr = txtGoal.getText().toString();
-        goalStr = goalStr.replace(".","");
+        goalStr = goalStr.replace(".", "");
 
-        long goal = -1;
-        try {
-            goal = Long.parseLong(goalStr);
-        } catch (NumberFormatException ex) {
-            Log.e("CreateProjectExtended", ex.getMessage());
-            Toast.makeText(this, "Invalid goal value", Toast.LENGTH_LONG).show();
-        }
-
-        ProjectData newProject = new ProjectData(0, userID, name, type, blurb, date, goal, 0);
-
-        Log.i("CreateProjectExtended", "Attempting to add new project: " + name);
-
-        long newID = databaseAdapter.addProject(newProject);
-
-        if (newID == -1) {
-            Log.e("CreateProjectExtended", "Error adding project");
-            Toast.makeText(this, "Failed to add new project", Toast.LENGTH_LONG).show();
+        if (name.equals("")) {
+            Toast.makeText(getApplicationContext(), "Project title is empty!", Toast.LENGTH_LONG).show();
+        } else if (type.equals("")) {
+            Toast.makeText(getApplicationContext(), "Category not selected!", Toast.LENGTH_LONG).show();
+        } else if (blurb.equals("")) {
+            Toast.makeText(getApplicationContext(), "Shot blurb is empty!", Toast.LENGTH_LONG).show();
+        } else if (date.equals("")) {
+            Toast.makeText(getApplicationContext(), "Date is empty!", Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(this, "Added new project " + name, Toast.LENGTH_LONG).show();
-        }
+            long goal = -1;
+            try {
+                goal = Long.parseLong(goalStr);
+            } catch (NumberFormatException ex) {
+                Log.e("CreateProjectExtended", ex.getMessage());
+                Toast.makeText(this, "Invalid goal value", Toast.LENGTH_LONG).show();
+            }
 
-        finish();
+            ProjectData newProject = new ProjectData(0, userID, name, type, blurb, date, goal, 0);
+
+            Log.i("CreateProjectExtended", "Attempting to add new project: " + name);
+
+            long newID = databaseAdapter.addProject(newProject);
+
+            if (newID == -1) {
+                Log.e("CreateProjectExtended", "Error adding project");
+                Toast.makeText(this, "Failed to add new project", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this, "Added new project " + name, Toast.LENGTH_LONG).show();
+            }
+
+            finish();
+        }
     }
 }
