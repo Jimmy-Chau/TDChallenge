@@ -7,11 +7,18 @@
     tools:context="com.example.adamfischer.jimmychau.tdchallenge.CreateProjectExtendedActivity"
     android:background="#007701">
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView6"
+        android:src="@drawable/save23" />
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/mainScrollView"
-        android:layout_above="@+id/buttonLayout">
+        android:layout_above="@+id/buttonLayout"
+        android:layout_below="@+id/imageView6">
 
         <LinearLayout
             android:orientation="vertical"
