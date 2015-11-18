@@ -46,4 +46,5 @@
     </string-array>
 
     <string name="facebook_app_id">1154475754564329</string>
+    <string name="title_activity_edit">EditActivity</string>
 </resources>

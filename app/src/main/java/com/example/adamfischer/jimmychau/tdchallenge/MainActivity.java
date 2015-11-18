@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -163,6 +164,19 @@ public class MainActivity extends Activity {
 
             arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, myProjects);
             listView.setAdapter(arrayAdapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    ProjectData item = (ProjectData)parent.getItemAtPosition(position);
+
+                    Intent i = new Intent(view.getContext(), EditActivity.class);
+                    i.putExtra("iItem", item);
+                    startActivity(i);
+
+                }
+            });
 
             return rootView;
         }
