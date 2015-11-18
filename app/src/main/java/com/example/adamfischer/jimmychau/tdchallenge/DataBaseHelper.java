@@ -17,14 +17,14 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         Log.i(this.getClass().toString() + ".onCreate", "Creating table " + DatabaseAdapter.TABLE_USERS);
         _db.execSQL(DatabaseAdapter.CREATE_TABLE_USERS);
-
+        _db.execSQL(DatabaseAdapter.CREATE_TABLE_PROJECTS);
 
         /***** !!!!!! DELETE BEFORE SUBMISSION  !!!!!! */
         System.err.println("REMEMBER TO DELETE ENTERING TEST DATA!!!!!");
-        String UserInsert = "INSERT INTO Users (ID,UserName,Password,FirstName,LastName,Email) VALUES (1,'a','a','a','a','a@a.a'),(2,'b','b','b','b','b@b.b'),(3,'c','c','c','c','c@c.c');";
-        _db.execSQL(UserInsert);
-
-        _db.execSQL(DatabaseAdapter.CREATE_TABLE_PROJECTS);
+        String testInsert = "INSERT INTO Users (ID,UserName,Password,FirstName,LastName,Email) VALUES (1,'a','a','a','a','a@a.a'),(2,'b','b','b','b','b@b.b'),(3,'c','c','c','c','c@c.c');";
+        _db.execSQL(testInsert);
+        testInsert = "INSERT INTO `Projects` (ID,UserID,Name,Type,Blurb,Date,Goal,Donated) VALUES (1,1,'My Project','Art','Fun','2015-12-25',100000,100),(2,1,'Bacon','Food','Yummy','2016-01-07',200000,2000),(3,2,'Their Project','Art','Fun','2015-12-25',100000,100),(4,2,'Their Bacon','Food','Yummy','2016-01-07',200000,2000),(5,3,'Their Other Project','Art','Fun','2015-12-25',100000,100),(6,3,'Their Other Bacon','Food','Yummy','2016-01-07',200000,2000);";
+        _db.execSQL(testInsert);
     }
     // Called when there is a database version mismatch meaning that the version
     // of the database on disk needs to be upgraded to the current version.
