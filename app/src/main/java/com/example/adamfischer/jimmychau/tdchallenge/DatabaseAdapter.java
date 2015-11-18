@@ -149,6 +149,38 @@ public class DatabaseAdapter {
     }
 
     /**
+     * Adds amount to user's balance.
+     * @param depositAmount
+     * @param user
+     * @return user's new balance
+     */
+    public long depositAmountToUser(long depositAmount, UserData user) {
+        if (depositAmount < 0) {
+            throw new IllegalArgumentException("Deposit amount must be at least 0");
+        }
+
+        long oldBalance = user.getBalance();
+        long newBalance = user.getBalance() + depositAmount;
+
+        ContentValues updatedValues = new ContentValues();
+        updatedValues.put(USERS_BALANCE, newBalance);
+
+        String user_id = Long.toString(user.getID());
+        int updatedRows = db.update(
+                TABLE_USERS,
+                updatedValues,
+                USERS_ID + "=?",
+                new String[]{user_id}
+        );
+
+        if (updatedRows == 1) {
+            return newBalance;
+        }
+
+        return oldBalance;
+    }
+
+    /**
      *
      * @param user UserData for user to update
      * @return number of rows affected,

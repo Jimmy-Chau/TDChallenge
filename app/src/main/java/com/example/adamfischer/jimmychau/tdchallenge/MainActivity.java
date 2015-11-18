@@ -2,8 +2,10 @@ package com.example.adamfischer.jimmychau.tdchallenge;
 
 import android.app.Activity;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.support.v13.app.FragmentPagerAdapter;
@@ -17,10 +19,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import io.karim.MaterialTabs;
 
@@ -32,6 +36,7 @@ import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.AppInviteDialog;
 import com.facebook.share.widget.ShareDialog;
 
+import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -265,6 +270,8 @@ public class MainActivity extends Activity {
     public void onAddFundsClick(View view) {
         RelativeLayout addFundsModal = (RelativeLayout)findViewById(R.id.addFundsModal);
 
+
+
         // show modal
         addFundsModal.setVisibility(View.VISIBLE);
     }
@@ -272,15 +279,59 @@ public class MainActivity extends Activity {
     private void closeAddFundsModal() {
         RelativeLayout addFundsModal = (RelativeLayout)findViewById(R.id.addFundsModal);
 
-        // TODO: Reset values on modal before showing
+        EditText txtAmount = (EditText)findViewById(R.id.editTextAddFundsAmount);
+        txtAmount.setText("");
+
+        EditText txtCardNum = (EditText)findViewById(R.id.editTextCardNumber);
+        txtCardNum.setText("");
+
+        // account balance
+        TextView txtBalance = (TextView)findViewById(R.id.textViewAccountBalance);
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        String balanceStr = formatter.format(userData.getBalance() / 100.0);
+        txtBalance.setText(balanceStr);
 
         addFundsModal.setVisibility(View.GONE);
     }
 
     public void onAcceptAddFundsClick(View view) {
+        // Calculate new Amount
+        EditText txtAmount = (EditText)findViewById(R.id.editTextAddFundsAmount);
+        BigDecimal addAmountBD;
+        final long addAmount;
+        try {
+            addAmountBD = new BigDecimal(txtAmount.getText().toString()).multiply(new BigDecimal("100"));
+            addAmount = addAmountBD.longValueExact();
+        } catch (RuntimeException rtx) {
+            Toast.makeText(this, "Amount is invalid", Toast.LENGTH_LONG).show();
+            return;
+        }
 
+        if (addAmount > 0) {
+            new AlertDialog.Builder(this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Adding Funds")
+                    .setMessage("Are you sure you want to charge this card?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            // Update user's balance
+                            long newBalance = dbAdapter.depositAmountToUser(addAmount, userData);
+                            userData.setBalance(newBalance);
+                            closeAddFundsModal();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            closeAddFundsModal();
+                        }
+                    })
+                    .show();
+        } else {
+            Toast.makeText(this, "Amount must be greater than 0", Toast.LENGTH_LONG).show();
+        }
 
-        closeAddFundsModal();
     }
 
     public void onCancelAddFundsClick(View view) {
@@ -319,7 +370,7 @@ public class MainActivity extends Activity {
             // account balance
             TextView txtBalance = (TextView)rootView.findViewById(R.id.textViewAccountBalance);
             NumberFormat formatter = NumberFormat.getCurrencyInstance();
-            String balanceStr = formatter.format(userData.getBalance());
+            String balanceStr = formatter.format(userData.getBalance()  / 100.0);
             txtBalance.setText(balanceStr);
 
             return rootView;
