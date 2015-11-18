@@ -23,8 +23,8 @@
 
     <string name="cancel">Cancel</string>
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_activity_create_project">CreateProjectActivity</string>
-    <string name="title_activity_create_project_extended">CreateProjectExtendedActivity</string>
+    <string name="title_activity_create_project">Create Project</string>
+    <string name="title_activity_create_project_extended">Create Project</string>
 
 
     <string-array name="type_selection">
@@ -46,6 +46,6 @@
     </string-array>
 
     <string name="facebook_app_id">1154475754564329</string>
-    <string name="title_activity_edit">EditActivity</string>
-    <string name="title_activity_other">OtherActivity</string>
+    <string name="title_activity_edit">Edit Project</string>
+    <string name="title_activity_other">Other Project</string>
 </resources>

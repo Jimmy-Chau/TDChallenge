@@ -36,8 +36,7 @@
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
-            android:parentActivityName=".LoginActivity"
-            android:theme="@android:style/Theme.Material.NoActionBar" >
+            android:theme="@android:style/Theme.Material" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.adamfischer.jimmychau.tdchallenge.LoginActivity" />
@@ -45,7 +44,6 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-            android:parentActivityName=".LoginActivity"
             android:theme="@android:style/Theme.Material.NoActionBar" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -54,8 +52,7 @@
         <activity
             android:name=".CreateProjectActivity"
             android:label="@string/title_activity_create_project"
-            android:parentActivityName=".MainActivity"
-            android:theme="@android:style/Theme.Material.NoActionBar" >
+            android:theme="@android:style/Theme.Material" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.adamfischer.jimmychau.tdchallenge.MainActivity" />
@@ -63,8 +60,7 @@
         <activity
             android:name=".CreateProjectExtendedActivity"
             android:label="@string/title_activity_create_project_extended"
-            android:parentActivityName=".CreateProjectActivity"
-            android:theme="@android:style/Theme.Material.NoActionBar" >
+            android:theme="@android:style/Theme.Material" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.adamfischer.jimmychau.tdchallenge.CreateProjectActivity" />
@@ -72,8 +68,7 @@
         <activity
             android:name=".EditActivity"
             android:label="@string/title_activity_edit"
-            android:parentActivityName=".MainActivity"
-            android:theme="@android:style/Theme.Material.NoActionBar" >
+            android:theme="@android:style/Theme.Material" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.adamfischer.jimmychau.tdchallenge.MainActivity" />
@@ -81,8 +76,7 @@
         <activity
             android:name=".OtherActivity"
             android:label="@string/title_activity_other"
-            android:parentActivityName=".MainActivity"
-            android:theme="@android:style/Theme.Material.NoActionBar" >
+            android:theme="@android:style/Theme.Material" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.adamfischer.jimmychau.tdchallenge.MainActivity" />
