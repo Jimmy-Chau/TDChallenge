@@ -4,13 +4,21 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.adamfischer.jimmychau.tdchallenge.EditActivity">
+    tools:context="com.example.adamfischer.jimmychau.tdchallenge.EditActivity"
+    android:background="#007701">
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView5"
+        android:src="@drawable/edit26" />
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/mainScrollView"
-        android:layout_above="@+id/buttonLayout">
+        android:layout_below="@+id/imageView5"
+        android:layout_above="@+id/saveButton">
 
         <LinearLayout
             android:orientation="vertical"
@@ -163,38 +171,33 @@
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
+    <Button
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/saveButton"
+        android:onClick="onSaveClick"
+        android:layout_above="@+id/cancelButton"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:id="@+id/deleteButton"
+        android:layout_gravity="center_horizontal"
+        android:onClick="deleteOnClick"
+        android:layout_alignTop="@+id/imageView5"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cancel"
+        android:id="@+id/cancelButton"
+        android:onClick="cancelOnClick"
         android:layout_alignParentBottom="true"
-        android:id="@+id/buttonLayout">
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Save"
-            android:id="@+id/saveButton"
-            android:layout_above="@+id/cancelButton"
-            android:layout_alignParentStart="true"
-            android:onClick="onSaveClick"/>
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Delete"
-            android:id="@+id/deleteButton"
-            android:layout_gravity="center_horizontal"
-            android:onClick="deleteOnClick" />
-
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:id="@+id/cancelButton"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:onClick="cancelOnClick" />
-    </LinearLayout>
+        android:layout_alignEnd="@+id/mainScrollView"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

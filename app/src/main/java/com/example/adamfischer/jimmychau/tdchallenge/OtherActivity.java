@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -64,12 +65,12 @@ public class OtherActivity extends Activity {
         pDonate.setText(donatedNum);
 
         GraphView graph = (GraphView) findViewById(R.id.graph);
-        BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(new DataPoint[] {
+        BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
                 new DataPoint(0, (pd.getDonated() / 100.0))
         });
 
 
-        BarGraphSeries<DataPoint> series2 = new BarGraphSeries<DataPoint>(new DataPoint[] {
+        BarGraphSeries<DataPoint> series2 = new BarGraphSeries<>(new DataPoint[] {
                 new DataPoint(1, (pd.getGoal() / 100.0))
         });
 
@@ -80,7 +81,7 @@ public class OtherActivity extends Activity {
         series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
             @Override
             public int get(DataPoint data) {
-                return Color.rgb(255, 0, 0);
+                return Color.rgb(149, 0, 0);
             }
         });
 
@@ -88,16 +89,16 @@ public class OtherActivity extends Activity {
         series2.setValueDependentColor(new ValueDependentColor<DataPoint>() {
             @Override
             public int get(DataPoint data) {
-                return Color.rgb(255,255,0);
+                return Color.rgb(0,89,89);
             }
         });
 
         // draw values on top
         series.setDrawValuesOnTop(true);
-        series.setValuesOnTopColor(Color.RED);
+        series.setValuesOnTopColor(Color.WHITE);
 
         series2.setDrawValuesOnTop(true);
-        series2.setValuesOnTopColor(Color.RED);
+        series2.setValuesOnTopColor(Color.WHITE);
 
         StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
         staticLabelsFormatter.setHorizontalLabels(new String[]{"Funding", "Goal"});
@@ -124,5 +125,9 @@ public class OtherActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void cancelOnClick(View view) {
+        finish();
     }
 }
