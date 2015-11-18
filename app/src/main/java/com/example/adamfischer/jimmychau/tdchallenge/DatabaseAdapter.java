@@ -237,4 +237,13 @@ public class DatabaseAdapter {
         cursor.close();
         return project;
     }
+
+
+    public int deleteProject(String projectName) {
+        return db.delete(
+                TABLE_PROJECTS,
+                PROJECTS_NAME + "=?",
+                new String[]{projectName}
+        );
+    }
 }

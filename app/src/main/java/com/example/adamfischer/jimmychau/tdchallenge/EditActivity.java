@@ -1,14 +1,19 @@
 package com.example.adamfischer.jimmychau.tdchallenge;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 public class EditActivity extends Activity {
+
+    DatabaseAdapter databaseAdapter;
 
     // Data about project
     private static ProjectData pd;
@@ -25,6 +30,10 @@ public class EditActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
 
+        // create a instance of SQLite Database
+        databaseAdapter = new DatabaseAdapter(this);
+        databaseAdapter = databaseAdapter.open();
+
         pt = (EditText) findViewById(R.id.projectTitleEditText);
         blurb = (EditText) findViewById(R.id.blurbEditText);
         ts = (Spinner) findViewById(R.id.typeSpinner);
@@ -34,11 +43,11 @@ public class EditActivity extends Activity {
 
         pd = (ProjectData)getIntent().getExtras().getSerializable("iItem");
 
-        pt.setText(pd.getName().toString());
-        blurb.setText(pd.getBlurb().toString());
-//        //ts.setSelection(pd.getType());
-//        //pl.setText(pd);
-       date.setText(pd.getDate().toString());
+        pt.setText(pd.getName());
+        blurb.setText(pd.getBlurb());
+       //ts.setSelection();
+       //pl.setText();
+       date.setText(pd.getDate());
         goal.setText(pd.getGoal() + "");
     }
 
@@ -62,5 +71,40 @@ public class EditActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void deleteOnClick(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Do this action");
+        builder.setMessage("do you want confirm this action?");
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                databaseAdapter.deleteProject(pd.getName());
+
+                dialog.dismiss();
+
+                finish();
+            }
+
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // I do not need any action here you might
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
+    public void cancelOnClick(View view) {
+        finish();
     }
 }
