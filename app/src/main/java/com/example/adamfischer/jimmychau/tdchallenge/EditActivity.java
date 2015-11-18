@@ -107,4 +107,35 @@ public class EditActivity extends Activity {
     public void cancelOnClick(View view) {
         finish();
     }
+
+    public void onSaveClick(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setTitle("Do this action");
+        builder.setMessage("do you want confirm this action?");
+
+        builder.setPositiveButton("YES", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                // Do do my action here
+                databaseAdapter.updateProject(pd);
+
+                dialog.dismiss();
+                finish();
+            }
+
+        });
+
+        builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // I do not need any action here you might
+                dialog.dismiss();
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
 }

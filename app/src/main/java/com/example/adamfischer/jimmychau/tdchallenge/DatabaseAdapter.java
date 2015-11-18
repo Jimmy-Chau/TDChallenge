@@ -278,4 +278,24 @@ public class DatabaseAdapter {
                 new String[]{projectName}
         );
     }
+
+    public int updateProject(ProjectData project) {
+        // Define the updated row content.
+        ContentValues updatedValues = new ContentValues();
+        // Assign values for each row.
+        updatedValues.put(PROJECTS_NAME, project.getName());
+        updatedValues.put(PROJECTS_BLURB, project.getBlurb());
+        updatedValues.put(PROJECTS_DATE, project.getDate());
+        updatedValues.put(PROJECTS_GOAL, project.getGoal());
+        updatedValues.put(PROJECTS_TYPE, project.getType());
+        updatedValues.put(PROJECTS_USER_ID, project.getUserID());
+
+        String project_id = Long.toString(project.getID());
+        return db.update(
+                TABLE_PROJECTS,
+                updatedValues,
+                PROJECTS_ID + "=?",
+                new String[]{project_id}
+        );
+    }
 }
