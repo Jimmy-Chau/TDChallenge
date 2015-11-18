@@ -27,6 +27,8 @@ public class EditActivity extends Activity {
     EditText date;
     EditText goal;
 
+    int typePosition;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +49,7 @@ public class EditActivity extends Activity {
         
         String[] array = getResources().getStringArray(R.array.type_selection);
 
-        int typePosition = Arrays.asList(array).indexOf(pd.getType());
+        typePosition = Arrays.asList(array).indexOf(pd.getType());
 
         pt.setText(pd.getName());
         blurb.setText(pd.getBlurb());
@@ -128,6 +130,7 @@ public class EditActivity extends Activity {
                 pd.setBlurb(blurb.getText().toString());
                 pd.setDate(date.getText().toString());
                 pd.setName(pt.getText().toString());
+                pd.setType(ts.getSelectedItem().toString());
 
                 databaseAdapter.updateProject(pd);
 
