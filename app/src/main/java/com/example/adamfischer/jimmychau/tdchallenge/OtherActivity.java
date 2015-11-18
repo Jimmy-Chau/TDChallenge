@@ -16,6 +16,9 @@ import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class OtherActivity extends Activity {
 
     DatabaseAdapter databaseAdapter;
@@ -27,6 +30,8 @@ public class OtherActivity extends Activity {
     TextView pBlurb;
     TextView pDuration;
     TextView pType;
+    TextView pGoal;
+    TextView pDonate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +48,33 @@ public class OtherActivity extends Activity {
         pBlurb = (TextView) findViewById(R.id.blurbTextView);
         pDuration = (TextView) findViewById(R.id.durationTextView);
         pType = (TextView) findViewById(R.id.typeTextView);
+        pGoal = (TextView) findViewById(R.id.goalTextView);
+        pDonate = (TextView) findViewById(R.id.donateTextView);
 
         pName.setText(pd.getName());
         pBlurb.setText(pd.getBlurb());
         pDuration.setText(pd.getDate());
         pType.setText(pd.getType());
 
+        NumberFormat n = NumberFormat.getCurrencyInstance(Locale.US);
+        String donatedNum = n.format(pd.getDonated() / 100.0);
+        String goalNum = n.format(pd.getGoal() / 100.0);
+
+        pGoal.setText(goalNum);
+        pDonate.setText(donatedNum);
+
         GraphView graph = (GraphView) findViewById(R.id.graph);
         BarGraphSeries<DataPoint> series = new BarGraphSeries<DataPoint>(new DataPoint[] {
-                new DataPoint(1, 150),
+                new DataPoint(0, (pd.getDonated() / 100.0))
         });
-        graph.addSeries(series);
+
 
         BarGraphSeries<DataPoint> series2 = new BarGraphSeries<DataPoint>(new DataPoint[] {
-                new DataPoint(0, 5)
+                new DataPoint(1, (pd.getGoal() / 100.0))
         });
+
         graph.addSeries(series2);
+        graph.addSeries(series);
 
         // styling
         series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
