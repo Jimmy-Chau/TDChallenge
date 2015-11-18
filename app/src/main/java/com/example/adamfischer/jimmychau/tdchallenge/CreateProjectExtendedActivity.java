@@ -42,7 +42,6 @@ public class CreateProjectExtendedActivity extends Activity {
 
         tSpinner.setSelection(cType);
 
-
         //other view refs
         txtBlurb = (EditText)findViewById(R.id.blurbEditText);
         txtDuration = (EditText)findViewById(R.id.durationEditText);
@@ -110,7 +109,7 @@ public class CreateProjectExtendedActivity extends Activity {
             Toast.makeText(this, "Invalid goal value", Toast.LENGTH_LONG).show();
         }
 
-        ProjectData newProject = new ProjectData(0, userID, name, type, blurb, date, goal);
+        ProjectData newProject = new ProjectData(0, userID, name, type, blurb, date, goal, 0);
 
         Log.i("CreateProjectExtended", "Attempting to add new project: " + name);
 

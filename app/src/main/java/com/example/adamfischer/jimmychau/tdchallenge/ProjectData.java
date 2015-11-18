@@ -13,8 +13,9 @@ public class ProjectData implements Serializable {
     private String blurb;
     private String date;
     private long goal;
+    private long donated;
 
-    public ProjectData(long ID, long userID, String name, String type, String blurb, String date, long goal) {
+    public ProjectData(long ID, long userID, String name, String type, String blurb, String date, long goal, long donated) {
         this.ID = ID;
         this.userID = userID;
         this.name = name;
@@ -22,6 +23,7 @@ public class ProjectData implements Serializable {
         this.blurb = blurb;
         this.date = date;
         this.goal = goal;
+        this.donated = donated;
     }
 
     public long getID() {
@@ -78,6 +80,14 @@ public class ProjectData implements Serializable {
 
     public void setGoal(long goal) {
         this.goal = goal;
+    }
+
+    public long getDonated() {
+        return donated;
+    }
+
+    public void setDonated(long goal) {
+        this.donated = donated;
     }
 
     @Override

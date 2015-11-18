@@ -15,8 +15,15 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase _db) {
 
-        Log.i(this.getClass().toString() + ".onCreate","Creating table " + DatabaseAdapter.TABLE_USERS);
+        Log.i(this.getClass().toString() + ".onCreate", "Creating table " + DatabaseAdapter.TABLE_USERS);
         _db.execSQL(DatabaseAdapter.CREATE_TABLE_USERS);
+
+
+        /***** !!!!!! DELETE BEFORE SUBMISSION  !!!!!! */
+        System.err.println("REMEMBER TO DELETE ENTERING TEST DATA!!!!!");
+        String UserInsert = "INSERT INTO Users (ID,UserName,Password,FirstName,LastName,Email) VALUES (1,'a','a','a','a','a@a.a'),(2,'b','b','b','b','b@b.b'),(3,'c','c','c','c','c@c.c');";
+        _db.execSQL(UserInsert);
+
         _db.execSQL(DatabaseAdapter.CREATE_TABLE_PROJECTS);
     }
     // Called when there is a database version mismatch meaning that the version

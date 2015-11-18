@@ -30,8 +30,6 @@ public class CreateProjectActivity extends Activity {
         setContentView(R.layout.activity_create_project);
 
         userID = getIntent().getExtras().getLong("userID");
-        Log.d("create1", ""+userID);
-
 
         mySpinner = (Spinner)findViewById(R.id.typeSpinner);
 

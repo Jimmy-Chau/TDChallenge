@@ -32,6 +32,7 @@ public class DatabaseAdapter {
     static final String PROJECTS_BLURB = "Blurb";
     static final String PROJECTS_DATE = "Date";
     static final String PROJECTS_GOAL = "Goal";
+    static final String PROJECTS_DONATED = "Donated";
 
     // SQL Statement to create a new database.
 //    static final String DATABASE_CREATE = "create table "+"LOGIN"+
@@ -56,6 +57,7 @@ public class DatabaseAdapter {
                 PROJECTS_BLURB      + " TEXT," +
                 PROJECTS_DATE       + " TEXT NOT NULL," +
                 PROJECTS_GOAL       + " INTEGER NOT NULL," +
+                PROJECTS_DONATED    + " INTEGER NOT NULL," +
                 "FOREIGN KEY ("+PROJECTS_USER_ID+") REFERENCES "+TABLE_USERS+"("+USERS_ID+")" +
             ")";
 
@@ -178,6 +180,7 @@ public class DatabaseAdapter {
         newValues.put(PROJECTS_BLURB, project.getBlurb());
         newValues.put(PROJECTS_DATE, project.getDate());
         newValues.put(PROJECTS_GOAL, project.getGoal());
+        newValues.put(PROJECTS_DONATED, project.getDonated());
 
         return db.insert(TABLE_PROJECTS, null, newValues);
     }
@@ -186,17 +189,38 @@ public class DatabaseAdapter {
         Cursor cursor = db.query(TABLE_PROJECTS, null, PROJECTS_USER_ID+"="+userID, null, null, null, null);
 
         ArrayList<ProjectData> projects = new ArrayList<>();
+
         if(cursor.getCount() > 0) { // Projects exists for user
             while (cursor.moveToNext()) {
-                long id = cursor.getLong(cursor.getColumnIndex(PROJECTS_ID));
-                //long userID = cursor.getLong(cursor.getColumnIndex(PROJECTS_USER_ID));
-                String name = cursor.getString(cursor.getColumnIndex(PROJECTS_NAME));
-                String type = cursor.getString(cursor.getColumnIndex(PROJECTS_TYPE));
-                String blurb = cursor.getString(cursor.getColumnIndex(PROJECTS_BLURB));
-                String date = cursor.getString(cursor.getColumnIndex(PROJECTS_DATE));
-                long goal = cursor.getLong(cursor.getColumnIndex(PROJECTS_GOAL));
+                projects.add(projectDataFromCursor(cursor));
+            }
+        }
 
-                projects.add(new ProjectData(id, userID , name, type, blurb, date, goal));
+        cursor.close();
+        return projects;
+    }
+
+    /**
+     *
+     * @param excludeUserID the id to exclude when retrieving projects
+     * @return
+     */
+    public ArrayList<ProjectData> getOtherProjects(long excludeUserID) {
+        String userIDStr = Long.toString(excludeUserID);
+        Cursor cursor = db.query(
+                TABLE_USERS,             // table
+                null,                    // columns[]
+                PROJECTS_USER_ID+"!=?",  // selection
+                new String[]{userIDStr}, // selectionArgs[]
+                PROJECTS_DATE,           // groupBy
+                null,                    // having
+                null,                    // orderBy
+                "10");                   // limit
+
+        ArrayList<ProjectData> projects = new ArrayList<>();
+        if(cursor.getCount() > 0) { // Projects exists for user
+            while (cursor.moveToNext()) {
+                projects.add(projectDataFromCursor(cursor));
             }
         }
 
@@ -222,23 +246,31 @@ public class DatabaseAdapter {
         ProjectData project = null;
         if(cursor.getCount() > 0) { // Project exists
             cursor.moveToFirst();
-
-            long id = cursor.getLong(cursor.getColumnIndex(PROJECTS_ID));
-            long userID = cursor.getLong(cursor.getColumnIndex(PROJECTS_USER_ID));
-            String name = cursor.getString(cursor.getColumnIndex(PROJECTS_NAME));
-            String type = cursor.getString(cursor.getColumnIndex(PROJECTS_TYPE));
-            String blurb = cursor.getString(cursor.getColumnIndex(PROJECTS_BLURB));
-            String date = cursor.getString(cursor.getColumnIndex(PROJECTS_DATE));
-            long goal = cursor.getLong(cursor.getColumnIndex(PROJECTS_GOAL));
-
-            project = new ProjectData(id, userID , name, type, blurb, date, goal);
+            project = projectDataFromCursor(cursor);
         }
 
         cursor.close();
         return project;
     }
 
+    /**
+     * Helper method to create ProjectData instance from Cursor object data
+     * @param cursor
+     * @return
+     */
+    private ProjectData projectDataFromCursor(Cursor cursor) {
+        long id = cursor.getLong(cursor.getColumnIndex(PROJECTS_ID));
+        long userID = cursor.getLong(cursor.getColumnIndex(PROJECTS_USER_ID));
+        String name = cursor.getString(cursor.getColumnIndex(PROJECTS_NAME));
+        String type = cursor.getString(cursor.getColumnIndex(PROJECTS_TYPE));
+        String blurb = cursor.getString(cursor.getColumnIndex(PROJECTS_BLURB));
+        String date = cursor.getString(cursor.getColumnIndex(PROJECTS_DATE));
+        long goal = cursor.getLong(cursor.getColumnIndex(PROJECTS_GOAL));
+        long donated = cursor.getLong(cursor.getColumnIndex(PROJECTS_DONATED));
 
+        return new ProjectData(id, userID , name, type, blurb, date, goal, donated);
+    }
+    
     public int deleteProject(String projectName) {
         return db.delete(
                 TABLE_PROJECTS,
