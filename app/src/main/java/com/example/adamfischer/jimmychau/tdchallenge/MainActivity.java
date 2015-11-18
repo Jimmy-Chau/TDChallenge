@@ -4,7 +4,9 @@ import android.app.Activity;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -21,6 +23,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import io.karim.MaterialTabs;
 
@@ -331,22 +334,27 @@ public class MainActivity extends Activity {
      **********************************************************************************************/
 
     public void appInviteClick(View view) {
-        String appLinkUrl, previewImageUrl;
+        if (isNetworkAvailable(this.getBaseContext())) {
+            String appLinkUrl, previewImageUrl;
 
-        appLinkUrl = "https://www.mydomain.com/myapplink";
-        previewImageUrl = "http://creativecurio.com/wp-content/uploads/2007/vm-logo-sm-1.gif";
+            appLinkUrl = "https://www.mydomain.com/myapplink";
+            previewImageUrl = "http://creativecurio.com/wp-content/uploads/2007/vm-logo-sm-1.gif";
 
-        if (AppInviteDialog.canShow()) {
-            AppInviteContent content = new AppInviteContent.Builder()
-                    .setApplinkUrl(appLinkUrl)
-                    .setPreviewImageUrl(previewImageUrl)
-                    .build();
-            AppInviteDialog.show(this, content);
+            if (AppInviteDialog.canShow()) {
+                AppInviteContent content = new AppInviteContent.Builder()
+                        .setApplinkUrl(appLinkUrl)
+                        .setPreviewImageUrl(previewImageUrl)
+                        .build();
+                AppInviteDialog.show(this, content);
+            }
+        } else {
+            Toast.makeText(MainActivity.this, "No Network Available - Please Connect Before Trying!", Toast.LENGTH_LONG).show();
         }
     }
 
 
     public void shareLinkOnClick(View view) {
+        if (isNetworkAvailable(this.getBaseContext())) {
         if (ShareDialog.canShow(ShareLinkContent.class)) {
             ShareLinkContent linkContent = new ShareLinkContent.Builder()
                     .setContentTitle("Hello Facebook")
@@ -356,6 +364,9 @@ public class MainActivity extends Activity {
                     .build();
 
             shareDialog.show(linkContent);
+        }
+        } else {
+            Toast.makeText(MainActivity.this, "No Network Available - Please Connect Before Trying!", Toast.LENGTH_LONG).show();
         }
     }
 
@@ -384,5 +395,10 @@ public class MainActivity extends Activity {
         super.onResume();
 
         AppEventsLogger.activateApp(this);
+    }
+
+    public boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 }
