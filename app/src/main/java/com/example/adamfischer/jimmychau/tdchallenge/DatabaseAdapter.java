@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class DatabaseAdapter {
     static final String DATABASE_NAME = "login.db";
-    static final int DATABASE_VERSION = 1;
+    static final int DATABASE_VERSION = 2;
 
     /********* Tables names *******/
     static final String TABLE_USERS = "Users";
@@ -24,6 +24,8 @@ public class DatabaseAdapter {
     static final String USERS_FIRST_NAME = "FirstName";
     static final String USERS_LAST_NAME = "LastName";
     static final String USERS_EMAIL = "Email";
+    static final String USERS_BALANCE = "Balance";
+
     // Projects
     static final String PROJECTS_ID = "ID";
     static final String PROJECTS_USER_ID = "UserID";
@@ -46,7 +48,8 @@ public class DatabaseAdapter {
                 USERS_PASSWORD      + " TEXT NOT NULL," +
                 USERS_FIRST_NAME    + " TEXT NOT NULL," +
                 USERS_LAST_NAME     + " TEXT NOT NULL," +
-                USERS_EMAIL         + " TEXT" +
+                USERS_EMAIL         + " TEXT," +
+                USERS_BALANCE       + " INTEGER NOT NULL" +
             ")";
      static final String CREATE_TABLE_PROJECTS =
              "CREATE TABLE "+TABLE_PROJECTS+" (" +
@@ -100,6 +103,7 @@ public class DatabaseAdapter {
         newValues.put(USERS_FIRST_NAME, user.getFirstName());
         newValues.put(USERS_LAST_NAME, user.getLastName());
         newValues.put(USERS_EMAIL, user.getEmail());
+        newValues.put(USERS_BALANCE, user.getBalance());
         // Insert the row into your table
         return db.insert(TABLE_USERS, null, newValues);
     }
@@ -136,8 +140,8 @@ public class DatabaseAdapter {
             String firstName = cursor.getString(cursor.getColumnIndex(USERS_FIRST_NAME));
             String lastName = cursor.getString(cursor.getColumnIndex(USERS_LAST_NAME));
             String email = cursor.getString(cursor.getColumnIndex(USERS_EMAIL));
-
-            user = new UserData(id, userName, password, firstName, lastName, email);
+            long balance = cursor.getLong(cursor.getColumnIndex(USERS_BALANCE));
+            user = new UserData(id, userName, password, firstName, lastName, email, balance);
         }
 
         cursor.close();
@@ -158,6 +162,7 @@ public class DatabaseAdapter {
         updatedValues.put(USERS_FIRST_NAME, user.getFirstName());
         updatedValues.put(USERS_LAST_NAME, user.getLastName());
         updatedValues.put(USERS_EMAIL, user.getEmail());
+        updatedValues.put(USERS_BALANCE, user.getBalance());
 
         String user_id = Long.toString(user.getID());
         return db.update(

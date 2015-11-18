@@ -21,7 +21,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
         /***** !!!!!! DELETE BEFORE SUBMISSION  !!!!!! */
         System.err.println("REMEMBER TO DELETE ENTERING TEST DATA!!!!!");
-        String testInsert = "INSERT INTO Users (ID,UserName,Password,FirstName,LastName,Email) VALUES (1,'a','a','a','a','a@a.a'),(2,'b','b','b','b','b@b.b'),(3,'c','c','c','c','c@c.c');";
+        String testInsert = "INSERT INTO Users (ID,UserName,Password,FirstName,LastName,Email,Balance) VALUES (1,'a','a','a','a','a@a.a',0),(2,'b','b','b','b','b@b.b',0),(3,'c','c','c','c','c@c.c',0);";
         _db.execSQL(testInsert);
         testInsert = "INSERT INTO `Projects` (ID,UserID,Name,Type,Blurb,Date,Goal,Donated) VALUES (1,1,'My Project','Art','Fun','2015-12-25',100000,100),(2,1,'Bacon','Food','Yummy','2016-01-07',200000,2000),(3,2,'Their Project','Art','Fun','2015-12-25',100000,100),(4,2,'Their Bacon','Food','Yummy','2016-01-07',200000,2000),(5,3,'Their Other Project','Art','Fun','2015-12-25',100000,100),(6,3,'Their Other Bacon','Food','Yummy','2016-01-07',200000,2000);";
         _db.execSQL(testInsert);

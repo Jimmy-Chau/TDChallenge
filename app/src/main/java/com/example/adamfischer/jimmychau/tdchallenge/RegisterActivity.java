@@ -86,7 +86,7 @@ public class RegisterActivity extends Activity {
                 } else {
                     // Save the Data in Database
 
-                    UserData userData = new UserData(0, userName, password, firstName, lastName, eMail);
+                    UserData userData = new UserData(0, userName, password, firstName, lastName, eMail, 0);
 
                     databaseAdapter.addUser(userData);
                     Toast.makeText(getApplicationContext(), "Account Successfully Created ", Toast.LENGTH_LONG).show();

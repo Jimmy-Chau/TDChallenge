@@ -13,14 +13,16 @@ public class UserData implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
+    private long balance;
 
-    public UserData(long ID, String userName, String password, String firstName, String lastName, String email) {
+    public UserData(long ID, String userName, String password, String firstName, String lastName, String email, long balance) {
         this.ID = ID;
         this.userName = userName;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.balance = balance;
     }
 
     public long getID() {
@@ -65,5 +67,13 @@ public class UserData implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public long getBalance() {
+        return balance;
+    }
+
+    public void setBalance(long balance) {
+        this.balance = balance;
     }
 }
