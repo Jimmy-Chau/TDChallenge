@@ -55,7 +55,9 @@ public class MainActivity extends Activity {
 
         setContentView(R.layout.activity_main);
 
-        userData = (UserData)getIntent().getExtras().getSerializable("userData");
+        if (getIntent().getExtras() != null) {
+            userData = (UserData)getIntent().getExtras().getSerializable("userData");
+        }
 
         pagerAdapter = new PagerAdapter(getFragmentManager());
 
@@ -169,7 +171,7 @@ public class MainActivity extends Activity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
-                    ProjectData item = (ProjectData)parent.getItemAtPosition(position);
+                    ProjectData item = (ProjectData) parent.getItemAtPosition(position);
 
                     Intent i = new Intent(view.getContext(), EditActivity.class);
                     i.putExtra("iItem", item);
@@ -198,6 +200,11 @@ public class MainActivity extends Activity {
      **********************************************************************************************/
     public static class OtherProjectsFragment extends TabFragment {
 
+        private static DatabaseAdapter dbAdapter;
+        private static ArrayList<ProjectData> otherProjects;
+
+        private ArrayAdapter<ProjectData> arrayAdapter;
+
         public OtherProjectsFragment() {
             this.tabTitle = "Other Projects";
         }
@@ -206,7 +213,38 @@ public class MainActivity extends Activity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_other_projects, container, false);
 
+            // load projects for signed-on user
+            dbAdapter = new DatabaseAdapter(getActivity()).open();
+            otherProjects = dbAdapter.getOtherProjects(userData.getID());
+
+            // populate list
+            ListView listView = (ListView)rootView.findViewById(R.id.listViewOtherProjects);
+
+            arrayAdapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_list_item_1, otherProjects);
+            listView.setAdapter(arrayAdapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ProjectData item = (ProjectData)parent.getItemAtPosition(position);
+
+                    Intent i = new Intent(view.getContext(), EditActivity.class);
+                    i.putExtra("iItem", item);
+                    startActivity(i);
+                }
+            });
+
             return rootView;
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            otherProjects.clear();
+            arrayAdapter.clear();
+
+            otherProjects.addAll(dbAdapter.getOtherProjects(userData.getID()));
+            arrayAdapter.notifyDataSetChanged();
         }
     }
 

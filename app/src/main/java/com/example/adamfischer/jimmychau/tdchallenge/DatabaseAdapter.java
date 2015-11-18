@@ -208,13 +208,13 @@ public class DatabaseAdapter {
     public ArrayList<ProjectData> getOtherProjects(long excludeUserID) {
         String userIDStr = Long.toString(excludeUserID);
         Cursor cursor = db.query(
-                TABLE_USERS,             // table
+                TABLE_PROJECTS,             // table
                 null,                    // columns[]
                 PROJECTS_USER_ID+"!=?",  // selection
                 new String[]{userIDStr}, // selectionArgs[]
-                PROJECTS_DATE,           // groupBy
+                null,           // groupBy
                 null,                    // having
-                null,                    // orderBy
+                PROJECTS_DATE,           // orderBy
                 "10");                   // limit
 
         ArrayList<ProjectData> projects = new ArrayList<>();

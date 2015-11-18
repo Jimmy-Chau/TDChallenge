@@ -30,10 +30,6 @@ public class ProjectData implements Serializable {
         return ID;
     }
 
-    public void setID(long ID) {
-        this.ID = ID;
-    }
-
     public long getUserID() {
         return userID;
     }
