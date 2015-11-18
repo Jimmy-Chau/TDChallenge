@@ -118,6 +118,11 @@ public class EditActivity extends Activity {
 
             public void onClick(DialogInterface dialog, int which) {
                 // Do do my action here
+
+                pd.setBlurb(blurb.getText().toString());
+                pd.setDate(date.getText().toString());
+                pd.setName(pt.getText().toString());
+
                 databaseAdapter.updateProject(pd);
 
                 dialog.dismiss();

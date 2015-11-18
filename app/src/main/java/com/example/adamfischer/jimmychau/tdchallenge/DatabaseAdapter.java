@@ -289,6 +289,7 @@ public class DatabaseAdapter {
         updatedValues.put(PROJECTS_GOAL, project.getGoal());
         updatedValues.put(PROJECTS_TYPE, project.getType());
         updatedValues.put(PROJECTS_USER_ID, project.getUserID());
+        updatedValues.put(PROJECTS_DONATED, project.getDonated());
 
         String project_id = Long.toString(project.getID());
         return db.update(
