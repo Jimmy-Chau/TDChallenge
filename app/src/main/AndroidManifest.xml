@@ -75,6 +75,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.adamfischer.jimmychau.tdchallenge.MainActivity" />
         </activity>
+        <activity
+            android:name=".OtherActivity"
+            android:label="@string/title_activity_other"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.adamfischer.jimmychau.tdchallenge.MainActivity" />
+        </activity>
     </application>
 
 </manifest>
