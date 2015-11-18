@@ -265,16 +265,26 @@ public class MainActivity extends Activity {
     public void onAddFundsClick(View view) {
         RelativeLayout addFundsModal = (RelativeLayout)findViewById(R.id.addFundsModal);
 
-        // TODO: Reset values on modal before showing
-
         // show modal
         addFundsModal.setVisibility(View.VISIBLE);
     }
 
-    public void onAcceptAddFundsClick(View view) {
+    private void closeAddFundsModal() {
         RelativeLayout addFundsModal = (RelativeLayout)findViewById(R.id.addFundsModal);
 
+        // TODO: Reset values on modal before showing
+
         addFundsModal.setVisibility(View.GONE);
+    }
+
+    public void onAcceptAddFundsClick(View view) {
+
+
+        closeAddFundsModal();
+    }
+
+    public void onCancelAddFundsClick(View view) {
+        closeAddFundsModal();
     }
 
     public static class ProfileFragment extends TabFragment {
