@@ -371,7 +371,7 @@ public class MainActivity extends Activity {
 
             // set up main page
             TextView txtMyName = (TextView)rootView.findViewById(R.id.textViewMyName);
-            txtMyName.setText(" " + userData.getFirstName() + " " + userData.getLastName() + ",");
+            txtMyName.setText(", " + userData.getFirstName() + " " + userData.getLastName());
 
             TextView txtEmail = (TextView)rootView.findViewById(R.id.emailTextView);
             TextView txtUserName = (TextView)rootView.findViewById(R.id.userNameTextView);

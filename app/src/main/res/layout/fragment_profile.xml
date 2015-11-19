@@ -11,40 +11,86 @@
                 tools:context="com.example.adamfischer.jimmychau.tdchallenge.MainActivity$MyProjectsFragment"
                 android:background="#007701">
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView10"
+        android:src="@drawable/business12" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Welcome"
-        android:id="@+id/textViewProfileWelcome" />
+        android:id="@+id/textViewProfileWelcome"
+        android:layout_below="@+id/imageView10" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/textViewMyName"
-        android:layout_alignParentTop="false"
-        android:layout_alignParentStart="false"
+        android:layout_below="@+id/imageView10"
+        android:layout_toEndOf="@+id/textViewProfileWelcome"
         android:layout_toRightOf="@+id/textViewProfileWelcome" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Your Account Balance is:"
-        android:id="@+id/textView2"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true" />
+        android:layout_below="@+id/textViewProfileWelcome"
+        android:layout_marginTop="50dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textStyle="bold"
-        android:textSize="40dp"
-        android:id="@+id/textViewAccountBalance"
-        android:layout_below="@+id/textView2"
-        android:layout_alignParentStart="true"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Your Username is:"
+            android:id="@+id/textView12"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/userNameTextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Your Email: "
+            android:id="@+id/textView"
+            android:layout_below="@+id/textViewProfileWelcome"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/emailTextView" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Your Account Balance is:"
+            android:id="@+id/textView2"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:textSize="40dp"
+            android:id="@+id/textViewAccountBalance"
+            android:layout_below="@+id/textView2"
+            android:layout_alignParentStart="true"/>
+
+    </LinearLayout>
 
     <Button
         android:layout_width="wrap_content"
@@ -192,43 +238,5 @@
             android:layout_alignParentRight="true" />
 
     </RelativeLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewProfileWelcome"
-        android:layout_marginTop="50dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Your Username is:"
-            android:id="@+id/textView12"
-            android:layout_below="@+id/textView"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/userNameTextView" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Your Email: "
-            android:id="@+id/textView"
-            android:layout_below="@+id/textViewProfileWelcome"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/emailTextView" />
-    </LinearLayout>
 
 </RelativeLayout>
