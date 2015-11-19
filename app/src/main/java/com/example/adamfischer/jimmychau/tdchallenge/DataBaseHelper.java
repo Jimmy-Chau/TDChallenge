@@ -1,3 +1,12 @@
+/*
+Project: TD Challenge
+Challenge: This particular challenge revolves around Social Media and Opportunities
+           in Finance leveraging the mobile platform.
+Coder: Jimmy Chau & Adam Fischer
+Date: November 18, 2015
+Course: INFO-5102 GUI Development
+*/
+
 package com.example.adamfischer.jimmychau.tdchallenge;
 
 import android.content.Context;
