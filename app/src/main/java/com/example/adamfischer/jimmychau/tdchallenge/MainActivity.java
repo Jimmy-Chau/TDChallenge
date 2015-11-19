@@ -363,6 +363,18 @@ public class MainActivity extends Activity {
 
             return rootView;
         }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+
+            // account balance
+            TextView txtBalance = (TextView)getView().findViewById(R.id.textViewAccountBalance);
+            NumberFormat formatter = NumberFormat.getCurrencyInstance();
+            String balanceStr = formatter.format(userData.getBalance()  / 100.0);
+            txtBalance.setText(balanceStr);
+        }
+
     }
 
     @Override
