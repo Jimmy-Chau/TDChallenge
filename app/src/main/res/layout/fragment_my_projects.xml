@@ -10,13 +10,20 @@
                 tools:context="com.example.adamfischer.jimmychau.tdchallenge.MainActivity$MyProjectsFragment"
     android:background="#007701">
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView9"
+        android:src="@drawable/business60" />
+
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/listViewMyProjects"
         android:layout_alignParentTop="false"
         android:layout_alignParentStart="false"
-        android:layout_above="@+id/buttonAddNewProject" />
+        android:layout_above="@+id/buttonAddNewProject"
+        android:layout_below="@+id/imageView9" />
 
     <Button
         android:layout_width="wrap_content"

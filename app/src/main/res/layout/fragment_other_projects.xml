@@ -10,11 +10,18 @@
                 tools:context="com.example.adamfischer.jimmychau.tdchallenge.MainActivity$MyProjectsFragment"
     android:background="#007701">
 
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView8"
+        android:src="@drawable/crowd" />
+
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/listViewOtherProjects"
         android:layout_alignParentTop="false"
-        android:layout_alignParentStart="false"/>
+        android:layout_alignParentStart="false"
+        android:layout_below="@+id/imageView8" />
 
 </RelativeLayout>
