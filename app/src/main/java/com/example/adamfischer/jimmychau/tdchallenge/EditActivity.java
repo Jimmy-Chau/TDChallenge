@@ -24,7 +24,6 @@ public class EditActivity extends Activity {
     EditText pt;
     EditText blurb;
     Spinner ts;
-    EditText pl;
     EditText date;
     EditText goal;
 
@@ -47,7 +46,6 @@ public class EditActivity extends Activity {
         pt = (EditText) findViewById(R.id.projectTitleEditText);
         blurb = (EditText) findViewById(R.id.blurbEditText);
         ts = (Spinner) findViewById(R.id.typeSpinner);
-        pl = (EditText) findViewById(R.id.locationEditText);
         date = (EditText) findViewById(R.id.durationEditText);
         goal = (EditText) findViewById(R.id.goalEditText);
 

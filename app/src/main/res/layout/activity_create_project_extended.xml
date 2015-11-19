@@ -103,29 +103,7 @@
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/categoryLayout"
-                android:id="@+id/locationLayout">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="Project location"
-                    android:id="@+id/locationTextView"
-                    android:layout_alignParentStart="true" />
-
-                <EditText
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/locationEditText" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/durationLayout"
-                android:layout_below="@+id/locationLayout">
+                android:id="@+id/durationLayout">
 
                 <TextView
                     android:layout_width="wrap_content"
