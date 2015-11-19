@@ -191,8 +191,9 @@ public class MainActivity extends Activity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     ProjectData item = (ProjectData) parent.getItemAtPosition(position);
 
-                    Intent i = new Intent(view.getContext(), EditActivity.class);
+                    Intent i = new Intent(view.getContext(), OtherActivity.class);
                     i.putExtra("iItem", item);
+                    i.putExtra("userData", userData);
                     startActivity(i);
                 }
             });

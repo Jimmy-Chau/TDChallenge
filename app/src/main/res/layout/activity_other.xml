@@ -235,4 +235,13 @@
 
     </RelativeLayout>
 
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:id="@+id/editButton"
+        android:layout_alignTop="@+id/donateButton"
+        android:layout_centerHorizontal="true"
+        android:onClick="editOnClick" />
+
 </RelativeLayout>

@@ -3,12 +3,14 @@ package com.example.adamfischer.jimmychau.tdchallenge;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -41,6 +43,9 @@ public class OtherActivity extends Activity {
     TextView pGoal;
     TextView pDonate;
 
+    Button dButton;
+    Button eButton;
+
     private long donateAmount;
 
     RelativeLayout donateModal;// = (RelativeLayout)findViewById(R.id.addFundsModal);
@@ -70,6 +75,20 @@ public class OtherActivity extends Activity {
         pType = (TextView) findViewById(R.id.typeTextView);
         pGoal = (TextView) findViewById(R.id.goalTextView);
         pDonate = (TextView) findViewById(R.id.donateTextView);
+
+        dButton = (Button) findViewById(R.id.donateButton);
+        eButton = (Button) findViewById(R.id.editButton);
+
+        if (userData.getID() == pd.getUserID())
+        {
+            dButton.setVisibility(View.INVISIBLE);
+            eButton.setVisibility(View.VISIBLE);
+        }
+        else
+        {
+            dButton.setVisibility(View.VISIBLE);
+            eButton.setVisibility(View.INVISIBLE);
+        }
 
         pName.setText(pd.getName());
         pBlurb.setText(pd.getBlurb());
@@ -271,5 +290,13 @@ public class OtherActivity extends Activity {
         pDonate.setText(donatedNum);
 
         donateModal.setVisibility(View.INVISIBLE);
+    }
+
+    public void editOnClick(View view) {
+        Intent i = new Intent(view.getContext(), EditActivity.class);
+        i.putExtra("iItem", pd);
+        i.putExtra("userData", userData);
+        startActivity(i);
+        finish();
     }
 }
