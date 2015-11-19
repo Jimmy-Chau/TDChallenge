@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
@@ -260,6 +261,10 @@ public class MainActivity extends Activity {
         RelativeLayout addFundsModal = (RelativeLayout)findViewById(R.id.addFundsModal);
 
 
+        // hide stupid button
+        Button addFundsButton = (Button) findViewById(R.id.buttonAddFunds);
+        addFundsButton.setVisibility(View.INVISIBLE);
+
         // show modal
         addFundsModal.setVisibility(View.VISIBLE);
     }
@@ -278,6 +283,10 @@ public class MainActivity extends Activity {
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         String balanceStr = formatter.format(userData.getBalance() / 100.0);
         txtBalance.setText(balanceStr);
+
+        // un-hide stupid button
+        Button addFundsButton = (Button) findViewById(R.id.buttonAddFunds);
+        addFundsButton.setVisibility(View.VISIBLE);
 
         addFundsModal.setVisibility(View.GONE);
     }
