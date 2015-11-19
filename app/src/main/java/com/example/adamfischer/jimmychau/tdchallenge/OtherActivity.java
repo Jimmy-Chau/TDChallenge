@@ -45,6 +45,8 @@ public class OtherActivity extends Activity {
 
     RelativeLayout donateModal;// = (RelativeLayout)findViewById(R.id.addFundsModal);
 
+    GraphView graph;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +83,7 @@ public class OtherActivity extends Activity {
         pGoal.setText(goalNum);
         pDonate.setText(donatedNum);
 
-        GraphView graph = (GraphView) findViewById(R.id.graph);
+        graph = (GraphView) findViewById(R.id.graph);
         BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
                 new DataPoint(0, (pd.getDonated() / 100.0))
         });
@@ -190,6 +192,44 @@ public class OtherActivity extends Activity {
                             pd.setDonated(newBalances[1]);
 
                             Log.d("donate", " new donated amount: " + newBalances[1] + " actual cur donated: " + pd.getDonated());
+
+                            graph.removeAllSeries();
+
+                            graph = (GraphView) findViewById(R.id.graph);
+                            BarGraphSeries<DataPoint> series = new BarGraphSeries<>(new DataPoint[] {
+                                    new DataPoint(0, (pd.getDonated() / 100.0))
+                            });
+
+
+                            BarGraphSeries<DataPoint> series2 = new BarGraphSeries<>(new DataPoint[] {
+                                    new DataPoint(1, (pd.getGoal() / 100.0))
+                            });
+
+                            graph.addSeries(series2);
+                            graph.addSeries(series);
+
+                            // styling
+                            series.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+                                @Override
+                                public int get(DataPoint data) {
+                                    return Color.rgb(149, 0, 0);
+                                }
+                            });
+
+                            // styling
+                            series2.setValueDependentColor(new ValueDependentColor<DataPoint>() {
+                                @Override
+                                public int get(DataPoint data) {
+                                    return Color.rgb(0,89,89);
+                                }
+                            });
+
+                            // draw values on top
+                            series.setDrawValuesOnTop(true);
+                            series.setValuesOnTopColor(Color.WHITE);
+
+                            series2.setDrawValuesOnTop(true);
+                            series2.setValuesOnTopColor(Color.WHITE);
 
                             closeDonateModal();
                         }
