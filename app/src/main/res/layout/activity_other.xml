@@ -152,7 +152,8 @@
         android:id="@+id/donateButton"
         android:layout_alignParentBottom="false"
         android:layout_centerHorizontal="true"
-        android:layout_above="@+id/cancelButton" />
+        android:layout_above="@+id/cancelButton"
+        android:onClick="onDonateClick" />
 
     <Button
         android:layout_width="fill_parent"
@@ -161,5 +162,77 @@
         android:id="@+id/cancelButton"
         android:onClick="cancelOnClick"
         android:layout_alignParentBottom="true" />
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="#32a933"
+        android:id="@+id/donateModal"
+        android:visibility="invisible"
+        android:transitionGroup="false"
+        android:layout_marginLeft="-16dp"
+        android:layout_marginRight="-16dp"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:gravity="center_vertical"
+        android:layout_centerVertical="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Donate to Project"
+            android:id="@+id/textViewDonateTitle" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:ems="10"
+            android:id="@+id/editTextDonateAmount"
+            android:layout_alignParentStart="false"
+            android:hint="($0.00)"
+            android:layout_below="@+id/textViewDonateTitle" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/textView10"
+            android:text="Your Balance"
+            android:layout_below="@+id/editTextDonateAmount" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:textSize="40dp"
+            android:id="@+id/textViewAccountBalance"
+            android:layout_below="@+id/textView10"
+            android:layout_alignParentStart="true"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            android:id="@+id/buttonCancelDonate"
+            android:onClick="onCancelDonateClick"
+            android:layout_below="@+id/textViewAccountBalance"
+            android:layout_toLeftOf="@+id/buttonAcceptDonate" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Accept"
+            android:id="@+id/buttonAcceptDonate"
+            android:onClick="onAcceptDonateClick"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/buttonCancelDonate" />
+
+    </RelativeLayout>
 
 </RelativeLayout>

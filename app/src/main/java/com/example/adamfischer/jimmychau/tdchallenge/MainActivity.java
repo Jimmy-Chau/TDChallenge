@@ -57,6 +57,8 @@ public class MainActivity extends Activity {
     private PagerAdapter pagerAdapter;
     private ViewPager viewPager;
 
+    private long addAmount;
+
     ShareDialog shareDialog;
 
     @Override
@@ -187,13 +189,11 @@ public class MainActivity extends Activity {
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
                     ProjectData item = (ProjectData) parent.getItemAtPosition(position);
 
                     Intent i = new Intent(view.getContext(), EditActivity.class);
                     i.putExtra("iItem", item);
                     startActivity(i);
-
                 }
             });
 
@@ -247,6 +247,7 @@ public class MainActivity extends Activity {
                     Intent i = new Intent(view.getContext(), OtherActivity.class);
 
                     i.putExtra("iItem", item);
+                    i.putExtra("userData", userData);
 
                     startActivity(i);
                 }
@@ -300,7 +301,7 @@ public class MainActivity extends Activity {
         // Calculate new Amount
         EditText txtAmount = (EditText)findViewById(R.id.editTextAddFundsAmount);
         BigDecimal addAmountBD;
-        final long addAmount;
+        addAmount = -1;
         try {
             addAmountBD = new BigDecimal(txtAmount.getText().toString()).multiply(new BigDecimal("100"));
             addAmount = addAmountBD.longValueExact();

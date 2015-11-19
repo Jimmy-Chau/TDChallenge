@@ -125,7 +125,7 @@ public class DatabaseAdapter {
         Cursor cursor = db.query(
                 TABLE_USERS,            // table
                 null,                   // columns[]
-                USERS_USERNAME+"=?",    // selection
+                USERS_USERNAME + "=?",    // selection
                 new String[]{userName}, // selectionArgs[]
                 null,                   // groupBy
                 null,                   // having
@@ -155,8 +155,10 @@ public class DatabaseAdapter {
      * @return user's new balance
      */
     public long depositAmountToUser(long depositAmount, UserData user) {
-        if (depositAmount < 0) {
-            throw new IllegalArgumentException("Deposit amount must be at least 0");
+        if (depositAmount < 0
+           && (Math.abs(depositAmount) > user.getBalance())
+        ) {
+            throw new IllegalArgumentException("Insufficient funds");
         }
 
         long oldBalance = user.getBalance();
@@ -208,6 +210,55 @@ public class DatabaseAdapter {
     /***********************************************************************************************
         Project methods
      **********************************************************************************************/
+
+    /**
+     *
+     * @param fromUser
+     * @param toProject
+     * @param amount
+     * @return long[2] where index 0 is new user balance and index 1 is new project balance
+     */
+    public long[] donate(UserData fromUser, ProjectData toProject, long amount) {
+        if (amount < 0 || amount > fromUser.getBalance()) {
+            throw new IllegalArgumentException("Donation amount invalid0");
+        }
+
+        final int NEW_USER_BAL_IDX = 0;
+        final int NEW_PROJ_BAL_IDX = 1;
+        long newBalances[] = {-1, -1};
+
+        db.beginTransaction();
+        try {
+            newBalances[NEW_USER_BAL_IDX] = depositAmountToUser( (-amount), fromUser);
+
+            long oldProjectBalance = toProject.getDonated();
+            long newProjectBalance = oldProjectBalance + amount;
+
+            ContentValues updatedProjectValues = new ContentValues();
+            updatedProjectValues.put(PROJECTS_DONATED, newProjectBalance);
+
+            String project_id = Long.toString(toProject.getID());
+            int updatedRows = db.update(
+                    TABLE_PROJECTS,
+                    updatedProjectValues,
+                    PROJECTS_ID + "=?",
+                    new String[]{project_id}
+            );
+
+            if (updatedRows == 1) {
+                newBalances[NEW_PROJ_BAL_IDX] = newProjectBalance;
+            } else {
+                newBalances[NEW_PROJ_BAL_IDX] = oldProjectBalance;
+            }
+
+            db.setTransactionSuccessful();
+        } finally {
+            db.endTransaction();
+        }
+
+        return newBalances;
+    }
+
     public long addProject(ProjectData project) {
         ContentValues newValues = new ContentValues();
 

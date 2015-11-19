@@ -82,7 +82,7 @@ public class ProjectData implements Serializable {
         return donated;
     }
 
-    public void setDonated(long goal) {
+    public void setDonated(long donated) {
         this.donated = donated;
     }
 
