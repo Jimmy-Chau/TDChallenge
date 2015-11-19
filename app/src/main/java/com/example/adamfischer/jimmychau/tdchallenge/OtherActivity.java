@@ -328,10 +328,9 @@ public class OtherActivity extends Activity {
                 if (isNetworkAvailable(this.getBaseContext())) {
                     if (ShareDialog.canShow(ShareLinkContent.class)) {
                         ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                                .setContentTitle("Hello Facebook")
-                                .setContentDescription(
-                                        "The 'Hello Facebook' sample  showcases simple Facebook integration")
-                                .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+                                .setContentTitle(pd.getName())
+                                .setContentDescription("Project Description: " + pd.getBlurb())
+                                .setContentUrl(Uri.parse("https://www.tdcanadatrust.com"))
                                 .build();
 
                         shareDialog.show(linkContent);
@@ -344,8 +343,8 @@ public class OtherActivity extends Activity {
                 if (isNetworkAvailable(this.getBaseContext())) {
                     String appLinkUrl, previewImageUrl;
 
-                    appLinkUrl = "https://www.mydomain.com/myapplink";
-                    previewImageUrl = "http://creativecurio.com/wp-content/uploads/2007/vm-logo-sm-1.gif";
+                    appLinkUrl = "https://www.tdcanadatrust.com";
+                    previewImageUrl = "https://www.tdcanadatrust.com/images/evergreen/logos/td_shield_nowhitespace.gif";
 
                     if (AppInviteDialog.canShow()) {
                         AppInviteContent content = new AppInviteContent.Builder()
