@@ -30,14 +30,6 @@ import android.widget.Toast;
 
 import io.karim.MaterialTabs;
 
-import com.facebook.CallbackManager;
-import com.facebook.FacebookSdk;
-import com.facebook.appevents.AppEventsLogger;
-import com.facebook.share.model.AppInviteContent;
-import com.facebook.share.model.ShareLinkContent;
-import com.facebook.share.widget.AppInviteDialog;
-import com.facebook.share.widget.ShareDialog;
-
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -59,17 +51,11 @@ public class MainActivity extends Activity {
 
     private long addAmount;
 
-    ShareDialog shareDialog;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         dbAdapter = new DatabaseAdapter(this).open();
-
-        FacebookSdk.sdkInitialize(getApplicationContext());
-
-        shareDialog = new ShareDialog(this);
 
         setContentView(R.layout.activity_main);
 
@@ -83,8 +69,7 @@ public class MainActivity extends Activity {
         tabFragments = new TabFragment[] {
             new MyProjectsFragment(),
             new OtherProjectsFragment(),
-            new SocialFragment(),
-            new ProfileFragment(),
+            new ProfileFragment()
         };
 
         // Add adapter to viewPager
@@ -380,79 +365,16 @@ public class MainActivity extends Activity {
         }
     }
 
-    /***********************************************************************************************
-        Social tab
-     **********************************************************************************************/
-
-    public void appInviteClick(View view) {
-        if (isNetworkAvailable(this.getBaseContext())) {
-            String appLinkUrl, previewImageUrl;
-
-            appLinkUrl = "https://www.mydomain.com/myapplink";
-            previewImageUrl = "http://creativecurio.com/wp-content/uploads/2007/vm-logo-sm-1.gif";
-
-            if (AppInviteDialog.canShow()) {
-                AppInviteContent content = new AppInviteContent.Builder()
-                        .setApplinkUrl(appLinkUrl)
-                        .setPreviewImageUrl(previewImageUrl)
-                        .build();
-                AppInviteDialog.show(this, content);
-            }
-        } else {
-            Toast.makeText(MainActivity.this, "No Network Available - Please Connect Before Trying!", Toast.LENGTH_LONG).show();
-        }
-    }
-
-
-    public void shareLinkOnClick(View view) {
-        if (isNetworkAvailable(this.getBaseContext())) {
-        if (ShareDialog.canShow(ShareLinkContent.class)) {
-            ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                    .setContentTitle("Hello Facebook")
-                    .setContentDescription(
-                            "The 'Hello Facebook' sample  showcases simple Facebook integration")
-                    .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
-                    .build();
-
-            shareDialog.show(linkContent);
-        }
-        } else {
-            Toast.makeText(MainActivity.this, "No Network Available - Please Connect Before Trying!", Toast.LENGTH_LONG).show();
-        }
-    }
-
-    public static class SocialFragment extends TabFragment {
-        public SocialFragment() {
-            this.tabTitle = "Social";
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_social, container, false);
-
-            return rootView;
-        }
-    }
-
     @Override
     protected void onPause() {
         super.onPause();
-
-        AppEventsLogger.deactivateApp(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        AppEventsLogger.activateApp(this);
-
         Log.d("onResume MainActivity", "Reloading user info to main activity");
         userData = dbAdapter.getUser(userData.getUserName());
-    }
-
-    public boolean isNetworkAvailable(final Context context) {
-        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
-        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
     }
 }

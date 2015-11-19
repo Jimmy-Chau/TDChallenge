@@ -2,9 +2,12 @@ package com.example.adamfischer.jimmychau.tdchallenge;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.ConnectivityManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +20,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.share.model.AppInviteContent;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.AppInviteDialog;
+import com.facebook.share.widget.ShareDialog;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.LegendRenderer;
 import com.jjoe64.graphview.ValueDependentColor;
@@ -24,6 +33,11 @@ import com.jjoe64.graphview.helper.StaticLabelsFormatter;
 import com.jjoe64.graphview.series.BarGraphSeries;
 import com.jjoe64.graphview.series.DataPoint;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -31,6 +45,8 @@ import java.util.Locale;
 public class OtherActivity extends Activity {
 
     DatabaseAdapter databaseAdapter;
+
+    ShareDialog shareDialog;
 
     // Data about project
     private static ProjectData pd;
@@ -55,6 +71,11 @@ public class OtherActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FacebookSdk.sdkInitialize(getApplicationContext());
+
+        shareDialog = new ShareDialog(this);
+
         setContentView(R.layout.activity_other);
 
         // Set up modal
@@ -299,4 +320,65 @@ public class OtherActivity extends Activity {
         startActivity(i);
         finish();
     }
+
+
+    public void shareOnClick(MenuItem item){
+        switch (item.getItemId()) {
+            case R.id.shareLink:
+                if (isNetworkAvailable(this.getBaseContext())) {
+                    if (ShareDialog.canShow(ShareLinkContent.class)) {
+                        ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                                .setContentTitle("Hello Facebook")
+                                .setContentDescription(
+                                        "The 'Hello Facebook' sample  showcases simple Facebook integration")
+                                .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+                                .build();
+
+                        shareDialog.show(linkContent);
+                    }
+                } else {
+                    Toast.makeText(OtherActivity.this, "No Network Available - Please Connect Before Trying!", Toast.LENGTH_LONG).show();
+                }
+                break;
+            case R.id.shareApp:
+                if (isNetworkAvailable(this.getBaseContext())) {
+                    String appLinkUrl, previewImageUrl;
+
+                    appLinkUrl = "https://www.mydomain.com/myapplink";
+                    previewImageUrl = "http://creativecurio.com/wp-content/uploads/2007/vm-logo-sm-1.gif";
+
+                    if (AppInviteDialog.canShow()) {
+                        AppInviteContent content = new AppInviteContent.Builder()
+                                .setApplinkUrl(appLinkUrl)
+                                .setPreviewImageUrl(previewImageUrl)
+                                .build();
+                        AppInviteDialog.show(this, content);
+                    }
+                } else {
+                    Toast.makeText(OtherActivity.this, "No Network Available - Please Connect Before Trying!", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+
+    public boolean isNetworkAvailable(final Context context) {
+        final ConnectivityManager connectivityManager = ((ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE));
+        return connectivityManager.getActiveNetworkInfo() != null && connectivityManager.getActiveNetworkInfo().isConnected();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        AppEventsLogger.deactivateApp(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        AppEventsLogger.activateApp(this);
+    }
+
+
 }

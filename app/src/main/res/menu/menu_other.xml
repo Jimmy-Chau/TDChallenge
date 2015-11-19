@@ -1,6 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.adamfischer.jimmychau.tdchallenge.OtherActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/shareLink" android:title="Share Link"
+        android:orderInCategory="100" android:showAsAction="never"
+        android:onClick="shareOnClick"/>
+    <item android:id="@+id/shareApp" android:title="Share Application"
+        android:orderInCategory="100" android:showAsAction="never"
+        android:onClick="shareOnClick"/>
 </menu>
