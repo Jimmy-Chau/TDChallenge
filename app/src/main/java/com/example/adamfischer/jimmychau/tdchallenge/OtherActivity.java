@@ -161,6 +161,9 @@ public class OtherActivity extends Activity {
         donateModal.setVisibility(View.VISIBLE);
     }
 
+    void doLongToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
 
     public void onAcceptDonateClick(View view) {
         // Calculate new Amount
@@ -187,7 +190,14 @@ public class OtherActivity extends Activity {
                             // Update balances
                             // idx 0 = userbalance
                             // idx 1 = projectbalance
-                            long[] newBalances = databaseAdapter.donate(userData, pd, donateAmount);
+                            long[] newBalances;
+                            try {
+                                newBalances = databaseAdapter.donate(userData, pd, donateAmount);
+                            } catch (IllegalArgumentException ex) {
+                                doLongToast("Invalid donation amount");
+                                return;
+                            }
+
                             userData.setBalance(newBalances[0]);
                             pd.setDonated(newBalances[1]);
 

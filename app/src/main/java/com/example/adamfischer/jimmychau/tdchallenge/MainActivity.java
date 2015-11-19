@@ -274,7 +274,6 @@ public class MainActivity extends Activity {
         RelativeLayout addFundsModal = (RelativeLayout)findViewById(R.id.addFundsModal);
 
 
-
         // show modal
         addFundsModal.setVisibility(View.VISIBLE);
     }
@@ -446,6 +445,9 @@ public class MainActivity extends Activity {
         super.onResume();
 
         AppEventsLogger.activateApp(this);
+
+        Log.d("onResume MainActivity", "Reloading user info to main activity");
+        userData = dbAdapter.getUser(userData.getUserName());
     }
 
     public boolean isNetworkAvailable(final Context context) {
