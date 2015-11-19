@@ -27,10 +27,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         Log.i(this.getClass().toString() + ".onCreate", "Creating table " + DatabaseAdapter.TABLE_USERS);
         _db.execSQL(DatabaseAdapter.CREATE_TABLE_USERS);
         _db.execSQL(DatabaseAdapter.CREATE_TABLE_PROJECTS);
-        
+
         String testInsert = "INSERT INTO Users (ID,UserName,Password,FirstName,LastName,Email,Balance) VALUES (1,'jchau','123456','Jimmy','Chau','jimmy_chau@hotmail.com',2500),(2,'afischer','123456','Adam','Fischer','a_fischer@gmail.com',5000),(3,'lwong','123456','Lianne','Wong','lwong@fanshaweonline.ca',30000);";
         _db.execSQL(testInsert);
-        testInsert = "INSERT INTO `Projects` (ID,UserID,Name,Type,Blurb,Date,Goal,Donated) VALUES (1,2,'Jimmy's Art Project,'Art','Random Art Projects','2015-12-25',100000,100),(2,1,'Bacon Tower','Food','Creating a bacon tower','2016-01-07',200000,2000),(3,2,'Their Project','Art','Fun','2015-12-25',100000,100),(4,2,'Their Bacon','Food','Yummy','2016-01-07',200000,2000),(5,3,'Their Other Project','Art','Fun','2015-12-25',100000,100),(6,3,'Their Other Bacon','Food','Yummy','2016-01-07',200000,2000);";
+        testInsert = "INSERT INTO `Projects` (ID,UserID,Name,Type,Blurb,Date,Goal,Donated) VALUES (1,2,'Art Project','Art','Random Art Projects','2015-12-25',100000,100),(2,1,'Bacon Tower','Food','Creating a bacon tower','2016-01-07',200000,2000),(3,2,'Their Project','Art','Fun','2015-12-25',100000,100),(4,2,'Their Bacon','Food','Yummy','2016-01-07',200000,2000),(5,3,'Their Other Project','Art','Fun','2015-12-25',100000,100),(6,3,'Their Other Bacon','Food','Yummy','2016-01-07',200000,2000);";
         _db.execSQL(testInsert);
     }
     // Called when there is a database version mismatch meaning that the version
