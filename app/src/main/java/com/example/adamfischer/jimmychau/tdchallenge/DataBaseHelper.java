@@ -28,9 +28,24 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         _db.execSQL(DatabaseAdapter.CREATE_TABLE_USERS);
         _db.execSQL(DatabaseAdapter.CREATE_TABLE_PROJECTS);
 
-        String testInsert = "INSERT INTO Users (ID,UserName,Password,FirstName,LastName,Email,Balance) VALUES (1,'jchau','123456','Jimmy','Chau','jimmy_chau@hotmail.com',2500),(2,'afischer','123456','Adam','Fischer','a_fischer@gmail.com',5000),(3,'lwong','123456','Lianne','Wong','lwong@fanshaweonline.ca',30000);";
+        String testInsert = "INSERT INTO Users (ID,UserName,Password,FirstName,LastName,Email,Balance) VALUES " +
+                "(1,'jchau','123456','Jimmy','Chau','jimmy_chau@hotmail.com',2500)," +
+                "(2,'afischer','123456','Adam','Fischer','a_fischer@gmail.com',5000)," +
+                "(3,'lwong','123456','Lianne','Wong','lwong@fanshaweonline.ca',30000);";
         _db.execSQL(testInsert);
-        testInsert = "INSERT INTO `Projects` (ID,UserID,Name,Type,Blurb,Date,Goal,Donated) VALUES (1,2,'Art Project','Art','Random Art Projects','2015-12-25',100000,100),(2,1,'Bacon Tower','Food','Creating a bacon tower','2016-01-07',200000,2000),(3,2,'Their Project','Art','Fun','2015-12-25',100000,100),(4,2,'Their Bacon','Food','Yummy','2016-01-07',200000,2000),(5,3,'Their Other Project','Art','Fun','2015-12-25',100000,100),(6,3,'Their Other Bacon','Food','Yummy','2016-01-07',200000,2000);";
+        testInsert = "INSERT INTO Projects (ID,UserID,Name,Type,Blurb,Date,Goal,Donated) VALUES " +
+                "(1,3,'Pulse','Technology','Stills. Timelapse. Video. Complete control of your DSLR or Mirrorless camera from your smartphone. Wirelessly.','2015-12-25',75000,74500)," +
+                "(2,3,'G-RO','Technology','The world`s best carry-on bag - its patented \"all-terrain\" wheels change EVERYTHING!','2016-03-01',100000,10500)," +
+                "(3,1,'MPL Macro','Technology','Take amazing close up pictures with your smart phone!','2015-12-25',15000,300)," +
+                "(4,1,'UnoSWU','Food','Yummy','2016-01-07',200000,2000)," +
+                "(5,1,'LUMA ACTIVE','Art','Fun','2015-12-25',100000,100)," +
+                "(6,1,'WhatsUpp flock','Food','Yummy','2016-01-07',200000,2000)," +
+                "(7,1,'Bubblz','category','blurb','2016-01-07',15000,2000)," +
+                "(8,2,'grocerEstore','category','blurb','2016-01-07',15000,2000)," +
+                "(9,2,'Mentor Connect Global','category','blurb','2016-01-07',15000,2000)," +
+                "(10,2,'MathTutorial','category','blurb','2016-01-07',15000,2000)," +
+                "(11,2,'WireWiz','category','blurb','2016-01-07',15000,2000)," +
+                "(12,2,'Fraternitree','category','blurb','2016-01-07',15000,2000);";
         _db.execSQL(testInsert);
     }
     // Called when there is a database version mismatch meaning that the version
